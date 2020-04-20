@@ -1,10 +1,11 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.encoders import jsonable_encoder
+from pydantic import BaseModel
 
 import json
 import configparser, os
-from models.aroio import Aroio
+from models.aroio import Aroio, ConvolverConfig
 
 ##########################
 # Userconfig.txt parser
@@ -59,6 +60,13 @@ async def root():
     return aroio_db
 
 
+# @aroio_api.patch("/filters/{filter_id}")
+# async def root():
+#     return {"message": "ABACUS Aroio API for Webinterfaces and App-Connections"}
+
+class Item(BaseModel):
+    id: str
+
 @aroio_api.patch("/filters/{filter_id}")
-async def root():
-    return {"message": "ABACUS Aroio API for Webinterfaces and App-Connections"}
+async def update_filter(filter_id: str, item: Item):
+    return item
