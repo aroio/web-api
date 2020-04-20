@@ -1,6 +1,7 @@
-venv
-venv/*
 .idea
 .idea/*
 __pycache__
 __pycache__/*
+
+# leave out all Visual Studio Code settings
+.vscode
