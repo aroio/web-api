@@ -96,6 +96,19 @@ aroio_api.add_middleware(
 )
 
 
+@aroio_api.get("/settings")
+async def read_item():
+    return aroio_db
+
+
+@aroio_api.patch("/settings}", response_model=Aroio)
+async def update_item(aroioSettings: Aroio):
+    update_item_encoded = jsonable_encoder(aroioSettings)
+    with open('aroio_db.json', 'w') as outfile:
+        json.dump(update_item_encoded, outfile)
+    return update_item_encoded
+
+
 @aroio_api.get("/filters")
 async def root():
     return aroio_db
@@ -104,39 +117,3 @@ async def root():
 @aroio_api.patch("/filters/{filter_id}")
 async def root():
     return {"message": "ABACUS Aroio API for Webinterfaces and App-Connections"}
-
-
-@aroio_api.get("/settings")
-async def read_item():
-    return {
-        "UPDATESERVER": "www.abacus-electronics.de/aroio2",
-        "BETASERVER": "www.abacus-electronics.de/aroio-beta",
-        "USEBETA": "OFF",
-        "PLATFORM": "AroioEX",
-        "HOSTNAME": "AroioEX",
-        "DHCP": "ON",
-        "IPADDR": "",
-        "NETMASK": "",
-        "DNSSERV": "",
-        "GATEWAY": "",
-        "WLANSSID": "",
-        "WLANPWD": "",
-        "USERPASSWD": "abacus",
-        "SERVERNAME": "",
-        "SERVERPORT": "",
-        "SQUEEZEUSER": "",
-        "SQUEEZEPWD": "",
-        "PLAYERNAME": "AroioEX",
-        "AUDIOPLAYER": "squeezelite",
-        "RATE": "96",
-        "CHANNELS": "2",
-        "MSCODING": "ON",
-        "VOLUME": "0 dB",
-        "JACKBUFFER": "4096",
-        "SOUNDCARD": "AroioDAC",
-        "DEBUG": "OFF",
-        "LOAD_PREFILTER": "ON",
-        "BRUTEFIR": "OFF",
-        "DEF_COEFF": "0",
-        "DEF_SCOEFF": "0"
-    }

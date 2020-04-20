@@ -1,59 +1,47 @@
 {
-  "name": "Aroio Test",
+  "name": "Aroio Test Neu",
   "timestamp": "1587379684",
   "description": "Dies ist eine Testkonfiguration für ein ABACUS-electronics Aroio Streamer.",
-  "configuration": [
-    {
-      "network": [
-        {
-          "hostname": "AroioEX",
-          "dhcp": "ON",
-          "ipaddr": "",
-          "netmask": "",
-          "dnsserv": "",
-          "gateway": "",
-          "wlanssid": "",
-          "wlanpwd": ""
-        }
-      ],
-      "system": [
-        {
-          "updateserver": "www.abacus-electronics.de/aroio2",
-          "betaserver": "www.abacus-electronics.de/aroio-beta",
-          "usebeta": "OFF",
-          "platform": "AroioEX",
-          "userpasswd": "abacus"
-        }
-      ],
-      "streaming": [
-        {
-          "servername": "",
-          "serverport": "",
-          "squeezeuser": "",
-          "squeezepwd": "",
-          "playername": "AroioEX"
-        }
-      ],
-      "audio": [
-        {
-          "audioplayer": "squeezelite",
-          "rate": "96",
-          "channels": "2",
-          "mscoding": "ON",
-          "volume": "0 dB",
-          "jackbuffer": "4096",
-          "soundcard": "AroioDAC"
-        }
-      ],
-      "convolver": [
-        {
-          "debug": "OFF",
-          "load_prefilter": "ON",
-          "brutefir": "OFF",
-          "def_coeff": "0",
-          "def_scoeff": "0"
-        }
-      ]
+  "configuration": {
+    "network": {
+      "hostname": "AroioEX",
+      "dhcp": "ON",
+      "ipaddr": "",
+      "netmask": "",
+      "dnsserv": "",
+      "gateway": "",
+      "wlanssid": "",
+      "wlanpwd": ""
+    },
+    "system": {
+      "updateserver": "www.abacus-electronics.de/aroio2",
+      "betaserver": "www.abacus-electronics.de/aroio-beta",
+      "usebeta": "OFF",
+      "platform": "AroioEX",
+      "userpasswd": "abacus"
+    },
+    "streaming": {
+      "servername": "",
+      "serverport": "",
+      "squeezeuser": "",
+      "squeezepwd": "",
+      "playername": "AroioEX"
+    },
+    "audio": {
+      "audioplayer": "squeezelite",
+      "rate": "96",
+      "channels": "2",
+      "mscoding": "ON",
+      "volume": "0 dB",
+      "jackbuffer": "4096",
+      "soundcard": "AroioDAC"
+    },
+    "convolver": {
+      "debug": "OFF",
+      "load_prefilter": "ON",
+      "brutefir": "OFF",
+      "def_coeff": "0",
+      "def_scoeff": "0"
     }
-  ]
+  }
 }
