@@ -21,5 +21,5 @@ $ deactivate
 
 ### Run API:
 ``` 
-$ uvicorn main:app --reload
+$ uvicorn main:aroio_api --reload
 ```
