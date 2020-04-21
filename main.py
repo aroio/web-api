@@ -7,7 +7,12 @@ from fastapi.responses import ORJSONResponse
 
 import json
 import configparser, os
-from models.aroio import Aroio, ConvolverConfig
+from models.aroio import Aroio, ConvolverConfig, NetworkConfig, from_json_to_aroio
+
+##########################
+# relevant files
+##########################
+AROIO_DB = 'aroio_db.json'
 
 ##########################
 # Userconfig.txt parser
@@ -20,9 +25,18 @@ from models.aroio import Aroio, ConvolverConfig
 ##########################
 # DB Configuration
 ##########################
-with open('aroio_db.json') as json_file:
-    # Parse JSON into an object with attributes corresponding to dict keys.
-    aroio_db = Aroio.from__json(json_file)
+def load_aroio() -> Aroio:
+    """Loading the aroio json from system"""
+    with open(AROIO_DB, "r") as json_file:
+        return from_json_to_aroio(json_file)
+
+
+def sync_aroio(aroio: Aroio) -> Aroio:
+    """Keeping the aroio_db in memory and in json file in sync"""
+    with open(AROIO_DB, 'w+') as db:
+        db.write(json.dumps(aroio.dict()))
+        db.close()
+    return aroio
 
 ##########################
 # API Configuration
@@ -42,47 +56,30 @@ aroio_api.add_middleware(
     allow_headers=["*"],
 )
 
+##########################
+# Routing Setup
+##########################
 
 @aroio_api.get("/settings")
 async def read_item():
-    return aroio_db
+    """Get saved Aroio from system"""
+    return load_aroio()
 
 
-# @aroio_api.post("/settings/network")
-# async def create_item(item: Aroio):
-#     return Aroio
+@aroio_api.post("/settings")
+async def upsert_aroio(aroio: Aroio):
+    """Sync Aroio sent within request body"""
+    return sync_aroio(aroio=aroio)
+
 
 @aroio_api.patch("/settings/network")
-async def update_item(formData):
-    aroio_db.configuration.network = formData
-    json_string = json.dumps(aroio_db.__dict__)
-    with open('aroio_db.json', 'w') as outfile:
-        json.dump(json_string, outfile)
-
-    with open('aroio_db.json') as json_file:
-        return Aroio.from__json(json_file)
-
-# @aroio_api.patch("/settings/network", response_model=Aroio)
-# async def update_item(item_id: str, item: Aroio):
-#     stored_item_model = Aroio(**item)
-#     update_data = item.dict(exclude_unset=True)
-#     updated_item = stored_item_model.copy(update=update_data)
-#     items[item_id] = jsonable_encoder(updated_item)
-#     return updated_item
+async def update_item(formData: NetworkConfig):
+    """Update the network configuration"""
+    aroio = load_aroio()
+    aroio.configuration.network = formData
+    sync_aroio(aroio=aroio)
 
 
 @aroio_api.get("/filters")
 async def root():
-    return aroio_db
-
-
-# @aroio_api.patch("/filters/{filter_id}")
-# async def root():
-#     return {"message": "ABACUS Aroio API for Webinterfaces and App-Connections"}
-
-class Item(BaseModel):
-    id: str
-
-@aroio_api.patch("/filters/{filter_id}")
-async def update_filter(filter_id: str, item: Item):
-    return item
+    return load_aroio()
