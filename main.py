@@ -100,12 +100,14 @@ async def update_item(formData: NetworkConfig):
 async def root():
     return load_aroio()
 
+  
+@app.on_event("shutdown")
+def shutdown_event():
+    """Persist all information in database in the userconfig.txt file"""
+    # TODO - persist it
+    pass
 
-@aroio_api.get("/items/{item_id}")
-async def read_item(item_id: int):
-    return {"item_id": item_id}
-
-
+  
 @aroio_api.get("/translations/{lang}")
 async def read_item(lang: str):
     """Get saved Aroio from system"""
