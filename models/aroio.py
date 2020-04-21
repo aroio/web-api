@@ -1,15 +1,17 @@
 from pydantic import BaseModel
+from typing import Optional
 import json
 
 class NetworkConfig(BaseModel):
         hostname: str
-        dhcp: str
-        ipaddr: str
-        netmask: str
-        dnsserv: str
-        gateway: str
-        wlanssid: str
-        wlanpwd: str
+        dhcp: bool
+        wifi: bool
+        ipaddr: Optional[str] = None
+        netmask: Optional[str] = None
+        dnsserv: Optional[str] = None
+        gateway: Optional[str] = None
+        wlanssid: Optional[str] = None
+        wlanpwd: Optional[str] = None
 
 
 class SystemConfig(BaseModel):
@@ -21,10 +23,10 @@ class SystemConfig(BaseModel):
 
 
 class StreamingConfig(BaseModel):
-    servername: str
-    serverport: str
-    squeezeuser: str
-    squeezepwd: str
+    servername: Optional[str] = None
+    serverport: Optional[str] = None
+    squeezeuser: Optional[str] = None
+    squeezepwd: Optional[str] = None
     playername: str
 
 
