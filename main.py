@@ -83,3 +83,10 @@ async def update_item(formData: NetworkConfig):
 @aroio_api.get("/filters")
 async def root():
     return load_aroio()
+
+
+@app.on_event("shutdown")
+def shutdown_event():
+    """Persist all information in database in the userconfig.txt file"""
+    # TODO - persist it
+    pass
