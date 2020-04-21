@@ -101,7 +101,7 @@ async def root():
     return load_aroio()
 
   
-@app.on_event("shutdown")
+@aroio_api.on_event("shutdown")
 def shutdown_event():
     """Persist all information in database in the userconfig.txt file"""
     # TODO - persist it
