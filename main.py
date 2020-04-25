@@ -1,8 +1,9 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.encoders import jsonable_encoder
-from pydantic import BaseModel
 from fastapi.responses import ORJSONResponse
+from fastapi.security import OAuth2PasswordBearer
+from pydantic import BaseModel
 
 import json
 import yaml
@@ -36,13 +37,14 @@ def load_aroio() -> Aroio:
 
 def load_translations(lang: str):
     """Loading the aroio translations from system"""
-    print(lang)
-    if lang == "DE" or lang == "de":
-        with open(AROIO_LANG_DE, "r") as yml_file:
-            return yaml.load(yml_file)
-    elif lang == "EN" or lang == "en":
-        with open(AROIO_LANG_EN, "r") as yml_file:
-            return yaml.load(yml_file)
+    translation = {
+        "DE": AROIO_LANG_DE,
+        "EN": AROIO_LANG_EN
+    }[lang]
+    
+    with open(translation, "r") as yml_file:
+        return yaml.load(yml_file)
+    
 
 
 def sync_aroio(aroio: Aroio) -> Aroio:
@@ -57,6 +59,7 @@ def sync_aroio(aroio: Aroio) -> Aroio:
 # API Configuration
 ##########################
 aroio_api = FastAPI()
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/token")
 
 origins = [
     "http://localhost",
@@ -80,6 +83,11 @@ aroio_api.add_middleware(
 async def read_item():
     """Get saved Aroio from system"""
     return load_aroio()
+
+
+@aroio_api.get("/items/")
+async def read_items(token: str = Depends(oauth2_scheme)):
+    return {"token": token}
 
 
 @aroio_api.post("/settings")
