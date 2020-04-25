@@ -2,3 +2,102 @@ aroio:
   title: Aroio Webinterface
   meta:
     description: ABACUS electronics Webinterface zur Steuerung und Konfiguratio von AroioOS-Geräten.
+
+  cta:
+    save: Speichern
+    add_filter: Filter hinzufügen
+
+  pages:
+    audio:
+      title: Audio
+      description: 'Hier kann das Ausgang-Routing des Aroio System eingestellt werden. Wählen Sie zuerst den gewünschten Ausgang. In Abhängigkeit zu dem Ausgang können Sie dann die gewünschten Player auswhlen. Eine Mehrfachauswahl ist nur bei dem Ausgang „Bus“ und „Convolver“ möglich. Am Ende können Sie die Kodierung des physikalischen Audio Ausgangs wählen. Mid/Side macht nur in zusammenhang mit unserer Geräte sinn, wenn Sie dort die Hardwareseitige Cleaner-Funktion Nutzen können.'
+      output:
+        title: Output
+        items:
+          direct: Direkt
+          bus: Bus
+          convolver: Convolver
+      player:
+        title: Player
+        items:
+          squeeze: Squeezelite
+          upnp: UPnP
+          shairplay: ShAirPlay
+          bluetooth: Bluetooth
+          line_in: Line In
+          netjack: NetJack
+      coding:
+        title: Kodierung
+        items:
+          ms: M/S
+          stereo: Stereo
+
+    convolver:
+      settings:
+        title: Einstellungen
+        convolution: Audio Convolution
+        convolution_disabled: Audio-Convolution ist nicht aktiviert
+        pre_filter: Pre-Filter beim Booten
+
+    network:
+      title: Netzwerk
+      connection:
+        title: Verbindung
+      webinterface:
+        title: Webinterface
+      forms:
+        hostname:
+          label: Hostname
+          placeholder: Aroio Küche
+          help: Geben Sie hier einen einzigartigen Netzwerknamen für Ihren Aroio an. Damit ist der Aroio im Netzwerk für andere Geräte zu sehen.
+        lan_dhcp:
+          label: Automatische Konfiguration (LAN)
+          placeholder: DHPC
+          help: Hier können Sie zwischen manueller/fester IP Vergabe oder automatischer Konfiguration via DHCP wählen. Denken Sie daran, dass Sie durch die Eingabe von inkorrekten Daten ihren Aroio nicht mehr so einfach im Netzwerk wieder finden können oder ggfs. das Gerät auf seine Ursprungskonfiguration zurückstezen müssen.
+        lan_ipaddr:
+          label: IP Adresse
+          placeholder: 123.456.789.12
+          help: Geben Sie eine IP Adresse an, welche Ihrem Heimnetzwerk entspricht.
+        lan_netmask:
+          label: Subnetzmaske
+          plazeholder: 255.255.255.0
+          help: Geben Sie hier die Subnetzmaske ihres Heimnetzes an, in den meisten Fällen ist 255.255.255.0 korrekt.
+        lan_gateway:
+          label: Gateway
+          placeholder: 192.168.0.1
+          help: Das Gateway ist im Regelfall Ihr Router. Wählen Sie also die IP-Adresse ihres Routers.
+        lan_dnsserv:
+          label: DNS Server
+          placeholder: 8.8.8.8
+          help: Der DNS Server dient zur Auflösung der Namen in Ihrem Netzwerk. In der Regel wird auch hier die IP Ihres Routers benötigt, in manchen Fällen ist zB. Google (8.8.8.8) als DNS Server schneller.
+        wifi:
+          label: WLAN
+          help: Hier können Sie die WLAN Verbindung des Aroio's aktivieren. Dies ist allerdings nur möglich, wenn ein WIFI-Dongle in dem Aroio gesteckt wurde.
+        wlan_ssid:
+          label: WLAN SSID
+          placeholder: SSID
+          help: Dies ist der Name ihres ausgewählten WLAN Netzwerkes
+        wlan_dhcp:
+          label: Automatische Konfiguration (WLAN)
+          placeholder: DHPC
+          help: Hier können Sie zwischen manueller/fester IP Vergabe oder automatischer Konfiguration via DHCP wählen. Denken Sie daran, dass Sie durch die Eingabe von inkorrekten Daten ihren Aroio nicht mehr so einfach im Netzwerk wieder finden können oder ggfs. das Gerät auf seine Ursprungskonfiguration zurückstezen müssen.
+        wlan_ipaddr:
+          label: WLAN IP Adresse
+          placeholder: 123.456.789.12
+          help: Geben Sie eine IP Adresse an, welche Ihrem Heimnetzwerk entspricht.
+        wlan_netmask:
+          label: WLAN Subnetzmaske
+          plazeholder: 255.255.255.0
+          help: Geben Sie hier die Subnetzmaske ihres Heimnetzes an, in den meisten Fällen ist 255.255.255.0 korrekt.
+        wlan_gateway:
+          label: WLAN Gateway
+          placeholder: 192.168.0.1
+          help: Das Gateway ist im Regelfall Ihr Router. Wählen Sie also die IP-Adresse ihres Routers.
+        wlan_dnsserv:
+          label: WLAN DNS Server
+          placeholder: 8.8.8.8
+          help: Der DNS Server dient zur Auflösung der Namen in Ihrem Netzwerk. In der Regel wird auch hier die IP Ihres Routers benötigt, in manchen Fällen ist zB. Google (8.8.8.8) als DNS Server schneller.
+        wlanpwd:
+          label: WLAN Passwort
+          placeholder: '*******'
+          help: Tragen Sie hier das Passwort Ihres WLAN Netzwerkes ein.
