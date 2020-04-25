@@ -7,7 +7,7 @@ from fastapi.responses import ORJSONResponse
 import json
 import yaml
 import configparser, os
-from models.aroio import Aroio, NetworkConfig, from_json_to_aroio
+from models.aroio import Aroio, NetworkConfig, ConvolverConfig, from_json_to_aroio
 
 ##########################
 # relevant files
@@ -93,6 +93,14 @@ async def update_item(formData: NetworkConfig):
     """Update the network configuration"""
     aroio = load_aroio()
     aroio.configuration.network = formData
+    sync_aroio(aroio=aroio)
+
+
+@aroio_api.patch("/settings/convolver")
+async def update_item(formData: ConvolverConfig):
+    """Update the Convolver configuration"""
+    aroio = load_aroio()
+    aroio.configuration.convolver = formData
     sync_aroio(aroio=aroio)
 
 

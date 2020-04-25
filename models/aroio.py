@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List
 import json
 
 class NetworkConfig(BaseModel):
@@ -94,13 +94,18 @@ class AudioConfig(BaseModel):
     jackbfms_netjack: Optional[bool] = False
     jackbfms_input: Optional[bool] = False
 
-class ConvolverConfig(BaseModel):
-    debug: str
-    load_prefilter: str
-    brutefir: str
-    def_coeff: str
-    def_scoeff: str
+class Filter(BaseModel):
+    coeff_name: Optional[str] = None
+    coeff_comment: Optional[str] = None
+    coeff_att: Optional[str] = None
+    coeff_delay: Optional[str] = None
 
+class ConvolverConfig(BaseModel):
+    debug: bool = False
+    load_prefilter: bool = False
+    brutefir: bool = False
+    def_coeff: Optional[str] = "0"
+    filters: List[Filter] = []
 
 class Configuration(BaseModel):
     network: NetworkConfig
@@ -108,7 +113,6 @@ class Configuration(BaseModel):
     streaming: StreamingConfig
     audio: AudioConfig
     convolver: ConvolverConfig
-
 
 class Aroio(BaseModel):
     name: str
