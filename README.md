@@ -1,5 +1,14 @@
 # ABACUS Aroio API for Webinterfaces and App-Connections
 
+## Requirements
+All requirements can be installed with pip
+
+```
+fastapi
+uvicorn
+json
+pyyaml
+```
 
 ## Setup
 
