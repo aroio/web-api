@@ -1,8 +1,8 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import ORJSONResponse
-from fastapi.security import OAuth2PasswordBearer
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from pydantic import BaseModel
 
 import json
@@ -83,6 +83,15 @@ aroio_api.add_middleware(
 async def read_item():
     """Get saved Aroio from system"""
     return load_aroio()
+
+
+@aroio_api.post("/token")
+async def login(formData: OAuth2PasswordRequestForm = Depends()):
+    # logging in with username and password
+    user = formData.username
+    password = formData.password
+
+    return {"access_token": user , "token_type": "bearer"}
 
 
 @aroio_api.get("/items/")
