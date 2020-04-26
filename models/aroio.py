@@ -1,66 +1,66 @@
 from pydantic import BaseModel
 from typing import Optional, List
 import json
+import datetime
+
 
 class NetworkConfig(BaseModel):
-        hostname: str
-        wifi: bool
-        lan_dhcp: Optional[bool] = True
-        lan_ipaddr: Optional[str] = None
-        lan_netmask: Optional[str] = None
-        lan_dnsserv: Optional[str] = None
-        lan_gateway: Optional[str] = None
-        wlan_dhcp: Optional[bool] = True
-        wlan_ipaddr: Optional[str] = None
-        wlan_netmask: Optional[str] = None
-        wlan_dnsserv: Optional[str] = None
-        wlan_gateway: Optional[str] = None
-        wlanssid: Optional[str] = None
-        wlanpwd: Optional[str] = None
+    hostname: str = "Aroio"
+    wifi: bool = False
+    lan_dhcp: Optional[bool] = True
+    lan_ipaddr: Optional[str] = None
+    lan_netmask: Optional[str] = None
+    lan_dnsserv: Optional[str] = None
+    lan_gateway: Optional[str] = None
+    wlan_dhcp: Optional[bool] = True
+    wlan_ipaddr: Optional[str] = None
+    wlan_netmask: Optional[str] = None
+    wlan_dnsserv: Optional[str] = None
+    wlan_gateway: Optional[str] = None
+    wlanssid: Optional[str] = None
+    wlanpwd: Optional[str] = None
 
 
 class SystemConfig(BaseModel):
-    updateserver: str
-    betaserver: str
-    usebeta: bool
-    platform: str
-    userpasswd: str
-    known_version: str
-    btkey: str
-    advanced: bool
-    display_rotate: bool
+    updateserver: str = "http://www.abacus-electronics.de/aroio-4"
+    usebeta: bool = False
+    platform: str = "AroioSU"
+    userpasswd: Optional[str] = None
+    known_version: str = "4.16.82"
+    btkey: str = "2107"
+    advanced: bool = False
+    display_rotate: bool = False
+
 
 class StreamingConfig(BaseModel):
     servername: Optional[str] = None
     serverport: Optional[str] = None
     squeezeuser: Optional[str] = None
     squeezepwd: Optional[str] = None
-    playername: str
+    playername: str = "Aroio Player"
 
 
 class AudioConfig(BaseModel):
-    audioplayer: str
-    rate: str
-    sprate: str
-    channels: str
-    mscoding: bool
-    volume: str
-    soundcard: str
-    resampling: str
-    volume_start: str
-    audio_output: str
-    measurement_output: str
-    debug: str
-    jackbuffer: str
-    jackperiod: str
-    raw_player: str
-    raw_playerms: str
-    squeeze_maxfrequency: str
-    squeeze_intbuffer: str
-    squeeze_outbuffer: str
-    sp_outbuffer: str
-    sp_period: str
-    bf_partitions: str
+    rate: str = "176400"
+    sprate: str = "44100"
+    channels: str = "2"
+    mscoding: bool = False
+    soundcard: str = "AroioDAC"
+    resampling: str = "speexrate_medium"
+    volume_start: str = "-15"
+    audio_output: str = "jack-bfms"
+    measurement_output: str = "vol-plug-ms"
+    debug: bool = False
+    jackbuffer: str = "8192"
+    jackperiod: str = "3"
+    raw_player: str = "shairportsync"
+    raw_playerms: str = "squeezelite"
+    squeeze_maxfrequency: str = "192000"
+    squeeze_intbuffer: str = "4096"
+    squeeze_outbuffer: str = "4096"
+    sp_outbuffer: str = "32768"
+    sp_period: str = "2"
+    bf_partitions: str = "2"
     dmix_squeezelite: Optional[bool] = False
     dmix_gmediarender: Optional[bool] = False
     dmix_shairportsync: Optional[bool] = False
@@ -94,11 +94,13 @@ class AudioConfig(BaseModel):
     jackbfms_netjack: Optional[bool] = False
     jackbfms_input: Optional[bool] = False
 
+
 class Filter(BaseModel):
     coeff_name: Optional[str] = None
     coeff_comment: Optional[str] = None
     coeff_att: Optional[str] = None
     coeff_delay: Optional[str] = None
+
 
 class ConvolverConfig(BaseModel):
     debug: bool = False
@@ -107,20 +109,26 @@ class ConvolverConfig(BaseModel):
     def_coeff: Optional[str] = "0"
     filters: List[Filter] = []
 
+
 class Configuration(BaseModel):
-    network: NetworkConfig
-    system: SystemConfig
-    streaming: StreamingConfig
-    audio: AudioConfig
-    convolver: ConvolverConfig
+    network: NetworkConfig = NetworkConfig()
+    system: SystemConfig = SystemConfig()
+    streaming: StreamingConfig = StreamingConfig()
+    audio: AudioConfig = AudioConfig()
+    convolver: ConvolverConfig = ConvolverConfig()
+
 
 class Aroio(BaseModel):
-    name: str
-    timestamp: str
-    description: str
-    configuration: Configuration
+    name: str = "Aroio"
+    timestamp: str = datetime.datetime.now().timestamp()
+    description: str = "This is a raw Aroio Configuration without any device specifications."
+    initial_config: bool = True
+    configuration: Configuration = Configuration()
 
-    
+
+def get_new_aroio() -> Aroio:
+    return Aroio()
+
 def from_json_to_aroio(json_string: str) -> Aroio:
     aroio_db = json.load(json_string)
     return Aroio(**aroio_db)

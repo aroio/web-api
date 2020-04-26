@@ -4,6 +4,7 @@ __pycache__
 __pycache__/*
 venv
 venv/*
+aroio_db.json
 
 # leave out all Visual Studio Code settings
 .vscode
