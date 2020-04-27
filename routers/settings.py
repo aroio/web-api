@@ -14,28 +14,22 @@ async def read_item():
     return datasource.load_aroio()
 
 
-@router.post("/settings", tags=["settings"])
-async def upsert_aroio(aroio: Aroio):
-    """Sync Aroio sent within request body"""
-    return datasource.sync_aroio(aroio=aroio)
-
-
 @router.patch("/settings", tags=["settings"])
-async def update_item(aroio: Aroio):
+async def update_aroio(aroio: Aroio):
     """Update the complete configuration"""
-    datasource.sync(aroio=aroio)
+    return datasource.sync(aroio=aroio)
 
 
 @router.patch("/settings/network", tags=["settings"])
 async def update_item(network_config: NetworkConfig):
     """Update the network configuration"""
-    datasource.sync(network_config=network_config)
+    return datasource.sync(network_config=network_config)
 
 
 @router.patch("/settings/convolver", tags=["settings"])
 async def update_item(convolver: ConvolverConfig):
     """Update the Convolver configuration"""
-    datasource.sync(convolver=convolver)
+    return datasource.sync(convolver=convolver)
 
 
 @router.get("/filters")
