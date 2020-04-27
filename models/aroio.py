@@ -34,16 +34,16 @@ class SystemConfig(BaseModel):
 
 class StreamingConfig(BaseModel):
     servername: Optional[str] = None
-    serverport: Optional[str] = None
+    serverport: Optional[int] = None
     squeezeuser: Optional[str] = None
     squeezepwd: Optional[str] = None
     playername: str = "Aroio Player"
 
 
 class AudioConfig(BaseModel):
-    rate: str = "176400"
-    sprate: str = "44100"
-    channels: str = "2"
+    rate: int = 176400
+    sprate: int = 44100
+    channels: int = 2
     mscoding: bool = False
     soundcard: str = "AroioDAC"
     resampling: str = "speexrate_medium"
@@ -51,16 +51,16 @@ class AudioConfig(BaseModel):
     audio_output: str = "jack-bfms"
     measurement_output: str = "vol-plug-ms"
     debug: bool = False
-    jackbuffer: str = "8192"
-    jackperiod: str = "3"
+    jackbuffer: int = 8192
+    jackperiod: int = 3
     raw_player: str = "shairportsync"
     raw_playerms: str = "squeezelite"
-    squeeze_maxfrequency: str = "192000"
-    squeeze_intbuffer: str = "4096"
-    squeeze_outbuffer: str = "4096"
-    sp_outbuffer: str = "32768"
-    sp_period: str = "2"
-    bf_partitions: str = "2"
+    squeeze_maxfrequency: int = 192000
+    squeeze_intbuffer: int = 4096
+    squeeze_outbuffer: int = 4096
+    sp_outbuffer: int = 32768
+    sp_period: int = 2
+    bf_partitions: int = 2
     dmix_squeezelite: Optional[bool] = False
     dmix_gmediarender: Optional[bool] = False
     dmix_shairportsync: Optional[bool] = False
@@ -106,7 +106,7 @@ class ConvolverConfig(BaseModel):
     debug: bool = False
     load_prefilter: bool = False
     brutefir: bool = False
-    def_coeff: Optional[str] = "0"
+    def_coeff: Optional[int] = 0
     filters: List[Filter] = []
 
 
@@ -120,7 +120,7 @@ class Configuration(BaseModel):
 
 class Aroio(BaseModel):
     name: str = "Aroio"
-    timestamp: str = datetime.datetime.now().timestamp()
+    timestamp: float = datetime.datetime.now().timestamp()
     description: str = "This is a raw Aroio Configuration without any device specifications. ÜÄÖ"
     initial_config: bool = True
     configuration: Configuration = Configuration()

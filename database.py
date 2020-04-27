@@ -19,26 +19,23 @@ class DataSource:
             return self.sync_aroio(Aroio.initial_aroio())
 
 
-    def sync_aroio(self, aroio: Aroio) -> Aroio:
-        """Syncing an Aroio entity"""
-        with open(self.aroio_path, 'w+') as db:
-            db.write(json.dumps(aroio.dict()))
-            db.close()
-        return aroio
-
-
-    def sync_network_config(self, network_config: NetworkConfig):
-        """Syncing a NetworkConfig"""
-        aroio = self.load_aroio()
-        aroio.configuration.network = network_config
-        self.sync_aroio(aroio=aroio)
-
-
-    def sync_convolver_config(self, convolver: ConvolverConfig):
-        """Syncing a ConvolverConfig"""
-        aroio = self.load_aroio()
-        aroio.configuration.convolver = convolver
-        self.sync_aroio(aroio=aroio)
+    def sync(
+        self,
+        aroio: Aroio=None,
+        network_config: NetworkConfig=None,
+        convolver_config: ConvolverConfig=None):
+        db = self.load_aroio()
+        if convolver_config is not None:
+            db.configuration.convolver = convolver_config
+        if network_config is not None:
+            db.configuration.network = network_config
+        if aroio is not None:
+            db = aroio
+        
+        with open(self.aroio_path, 'w') as f:
+            f.write(json.dumps(db.dict()))
+            f.close()
+        return db
 
 
     def load_translations(self, lang: str):
