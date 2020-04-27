@@ -8,3 +8,6 @@ aroio_db.json
 
 # leave out all Visual Studio Code settings
 .vscode
+pyvenv.cfg
+bin
+lib
