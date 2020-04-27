@@ -9,7 +9,7 @@ router = APIRouter()
 datasource = DataSource()
 
 @router.get("/settings", tags=["settings"])
-async def read_item():
+async def get_aroio():
     """Get saved Aroio from system"""
     return datasource.load_aroio()
 
@@ -21,23 +21,28 @@ async def update_aroio(aroio: Aroio):
 
 
 @router.patch("/settings/network", tags=["settings"])
-async def update_item(network_config: NetworkConfig):
+async def update_network_config(network_config: NetworkConfig):
     """Update the network configuration"""
     return datasource.sync(network_config=network_config)
 
 
 @router.patch("/settings/convolver", tags=["settings"])
-async def update_item(convolver: ConvolverConfig):
+async def update_convolver_config(convolver: ConvolverConfig):
     """Update the Convolver configuration"""
     return datasource.sync(convolver=convolver)
 
 
-@router.get("/filters")
+@router.get("/filters", tags=["settings"])
 async def load_filters():
     return datasource.load_aroio().configuration.convolver.filters
 
 
-@router.get("/translations/{lang}")
-async def read_item(lang: str):
+@router.patch("/filters", tags=["settings"])
+async def update_filters(filters: List[Filter]):
+    return datasource.sync(filters=filters)
+
+
+@router.get("/translations/{lang}", tags=["language"])
+async def get_translations(lang: str):
     """Get saved Aroio from system"""
     return datasource.load_translations(lang=lang)
