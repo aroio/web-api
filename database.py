@@ -75,7 +75,7 @@ class DataSource:
         translation = {
             "DE": self.translation_path + "messages.de.yml",
             "EN": self.translation_path + "messages.en.yml"
-        }[lang]
+        }[lang.upper()]
     
         with open(translation, "r") as yml_file:
             return yaml.safe_load(yml_file)
