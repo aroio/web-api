@@ -1,11 +1,12 @@
 from fastapi import APIRouter
-from main import datasource
+from database import DataSource
 from models.aroio import *
 
 ############
 # Settings router
 ############
 router = APIRouter()
+datasource = DataSource()
 
 @router.get("/settings", tags=["settings"])
 async def read_item():
