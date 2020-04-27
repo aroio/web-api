@@ -3,6 +3,7 @@ from typing import List
 import json
 import yaml
 
+
 class DataSource:
 
     def __init__(self, path: str="./aroio_db.json", translation_path: str="./translations/"):
