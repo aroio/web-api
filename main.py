@@ -8,7 +8,7 @@ from pydantic import BaseModel
 import json
 import yaml
 import configparser, os
-from models.aroio import Aroio, NetworkConfig, ConvolverConfig, from_json_to_aroio
+from models.aroio import Aroio, NetworkConfig, ConvolverConfig, from_json_to_aroio, get_new_aroio
 
 ##########################
 # relevant files
@@ -21,7 +21,6 @@ AROIO_LANG_EN = 'translations/messages.en.yml'
 ##########################
 # Userconfig.txt parser
 ##########################
-
 # config = configparser.ConfigParser()
 # config.read_file(open('userconfig.txt'))
 # config.read(['site.cfg', os.path.expanduser('~/.myapp.cfg')])
@@ -31,8 +30,12 @@ AROIO_LANG_EN = 'translations/messages.en.yml'
 ##########################
 def load_aroio() -> Aroio:
     """Loading the aroio json from system"""
-    with open(AROIO_DB, "r") as json_file:
-        return from_json_to_aroio(json_file)
+    try:
+        with open(AROIO_DB, "r") as json_file:
+            return from_json_to_aroio(json_file)
+    except IOError:
+        print("Database not accessible, generate Database.")
+        return sync_aroio(get_new_aroio())
 
 
 def load_translations(lang: str):
@@ -105,6 +108,11 @@ async def upsert_aroio(aroio: Aroio):
     return sync_aroio(aroio=aroio)
 
 
+@aroio_api.patch("/settings")
+async def update_item(formData: Aroio):
+    """Update the complete configuration"""
+    sync_aroio(aroio=formData)
+
 @aroio_api.patch("/settings/network")
 async def update_item(formData: NetworkConfig):
     """Update the network configuration"""
@@ -125,14 +133,14 @@ async def update_item(formData: ConvolverConfig):
 async def root():
     return load_aroio()
 
-  
+
 @aroio_api.on_event("shutdown")
 def shutdown_event():
     """Persist all information in database in the userconfig.txt file"""
     # TODO - persist it
     pass
 
-  
+
 @aroio_api.get("/translations/{lang}")
 async def read_item(lang: str):
     """Get saved Aroio from system"""

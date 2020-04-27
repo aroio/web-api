@@ -8,6 +8,14 @@ aroio:
     add_filter: Filter hinzufügen
 
   pages:
+    security:
+      select_device:
+        title: Bitte wählen Sie ihr Aroio Gerät aus
+        form:
+          device:
+            placeholder: Wählen Sie bitte ein Aroio Gerät
+            label: Aroio Gerät
+            help: Sie wählen hier eine Grundkonfiguration für Ihr Aroio System aus, bitte wählen Sie das Gerät aus, welches Sie gekauft haben.
     audio:
       title: Audio
       description: 'Hier kann das Ausgang-Routing des Aroio System eingestellt werden. Wählen Sie zuerst den gewünschten Ausgang. In Abhängigkeit zu dem Ausgang können Sie dann die gewünschten Player auswhlen. Eine Mehrfachauswahl ist nur bei dem Ausgang „Bus“ und „Convolver“ möglich. Am Ende können Sie die Kodierung des physikalischen Audio Ausgangs wählen. Mid/Side macht nur in zusammenhang mit unserer Geräte sinn, wenn Sie dort die Hardwareseitige Cleaner-Funktion Nutzen können.'
