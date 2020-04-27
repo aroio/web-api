@@ -1,2 +1,2 @@
 #!/bin/bash
-uvicorn main:aroio_api --reload
+python main.py
