@@ -1,6 +1,7 @@
-from models.aroio import Aroio, NetworkConfig, ConvolverConfig
-import logging
+from models.aroio import Aroio, Configuration, NetworkConfig, SystemConfig, StreamingConfig, AudioConfig, ConvolverConfig, Filter
+from typing import List
 import json
+import yaml
 
 class DataSource:
 
@@ -15,22 +16,48 @@ class DataSource:
             with open(self.aroio_path, "r") as json_file:
                 return Aroio.create_from_json(json_file)
         except IOError:
-            logging.info("Database not accessible, generate Database.")
+            print("Database not accessible, generate Database.")
             return self.sync_aroio(Aroio.initial_aroio())
 
 
-    def sync(
-        self,
+    def sync(self,
         aroio: Aroio=None,
+        configuration: Configuration=None,
         network_config: NetworkConfig=None,
-        convolver_config: ConvolverConfig=None):
+        system_config: SystemConfig=None,
+        streaming_config: StreamingConfig=None,
+        audio_config: AudioConfig=None,
+        convolver_config: ConvolverConfig=None,
+        filters: List[Filter]=None):
+        """Syncing of entities.
+        Updating Aroio entities by just passing as a parameter. E.g.:
+        ```
+        aroio = Aroio()
+        ds = DataSource()
+        ds.sync(aroio=Aroio)
+        ```
+
+        The more detailed settings would override the more general settings.
+        E.g. a SystemConfig would override the SystemConfig set by the Configuration object.
+        """
+
         db = self.load_aroio()
-        if convolver_config is not None:
-            db.configuration.convolver = convolver_config
-        if network_config is not None:
-            db.configuration.network = network_config
         if aroio is not None:
             db = aroio
+        if configuration is not None:
+            db.configuration = configuration
+        if network_config is not None:
+            db.configuration.network = network_config
+        if system_config is not None:
+            db.configuration.system = system_config
+        if streaming_config is not None:
+            db.configuration.streaming = streaming_config
+        if audio_config is not None:
+            db.configuration.audio = audio_config
+        if convolver_config is not None:
+            db.configuration.convolver = convolver_config
+        if filters is not None:
+            db.configuration.convolver.filters = filters
         
         with open(self.aroio_path, 'w') as f:
             f.write(json.dumps(db.dict()))
@@ -39,11 +66,16 @@ class DataSource:
 
 
     def load_translations(self, lang: str):
-        """Loading the aroio translations from system"""
+        """
+        Loading the aroio translations from system. Currently only english 
+        and german is supported. For required translation pass in intials 
+        of required language. Initials can be passed in either way uppercase 
+        and lowercase. E.g. for english translation `EN` or `en` is possible.
+        """
         translation = {
             "DE": self.translation_path + "messages.de.yml",
             "EN": self.translation_path + "messages.en.yml"
         }[lang]
     
         with open(translation, "r") as yml_file:
-            return yaml.load(yml_file)
+            return yaml.safe_load(yml_file)

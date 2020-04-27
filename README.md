@@ -19,9 +19,9 @@ $ deactivate
 
 ### Requirements
 All requirements can be installed with pip. Required dependencies are:
-- `fastapi`
-- `uvicorn`
-- `pyyaml`
+- [`fastapi`](https://fastapi.tiangolo.com/)
+- [`uvicorn`](https://www.uvicorn.org/)
+- [`pyyaml`](https://pyyaml.org/wiki/PyYAMLDocumentation)
 
 ## Run API:
 To start the ASGI server via uvicorn run
