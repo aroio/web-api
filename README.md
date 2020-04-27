@@ -21,7 +21,6 @@ $ deactivate
 All requirements can be installed with pip. Required dependencies are:
 - `fastapi`
 - `uvicorn`
-- `json`
 - `pyyaml`
 
 ## Run API:
