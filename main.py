@@ -1,7 +1,7 @@
-import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from database import DataSource
+
+import uvicorn
 from routers import settings
 
 ###############
