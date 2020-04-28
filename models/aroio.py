@@ -2,6 +2,7 @@ from pydantic import BaseModel
 from typing import Optional, List
 import json
 import datetime
+from auth import Authentication
 
 
 class NetworkConfig(BaseModel):
@@ -25,7 +26,7 @@ class SystemConfig(BaseModel):
     updateserver: str = "http://www.abacus-electronics.de/aroio-4"
     usebeta: bool = False
     platform: str = "AroioSU"
-    userpasswd: Optional[str] = None
+    userpasswd: str = Authentication.hash_password("abacus")  # default password
     known_version: str = "4.16.82"
     btkey: str = "2107"
     advanced: bool = False
@@ -47,7 +48,7 @@ class AudioConfig(BaseModel):
     mscoding: bool = False
     soundcard: str = "AroioDAC"
     resampling: str = "speexrate_medium"
-    volume_start: str = "-15"
+    volume_start: int = -15
     audio_output: str = "jack-bfms"
     measurement_output: str = "vol-plug-ms"
     debug: bool = False
@@ -119,7 +120,7 @@ class Configuration(BaseModel):
 
 
 class Aroio(BaseModel):
-    name: str = "Aroio"
+    name: str = "aroio"
     timestamp: float = datetime.datetime.now().timestamp()
     description: str = "This is a raw Aroio Configuration without any device specifications. ÜÄÖ"
     initial_config: bool = True

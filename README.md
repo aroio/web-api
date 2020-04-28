@@ -22,6 +22,7 @@ All requirements can be installed with pip. Required dependencies are:
 - [`fastapi`](https://fastapi.tiangolo.com/)
 - [`uvicorn`](https://www.uvicorn.org/)
 - [`pyyaml`](https://pyyaml.org/wiki/PyYAMLDocumentation)
+- [`PyJWT`](https://pyjwt.readthedocs.io/en/latest/)
 
 ## Run API:
 To start the ASGI server via uvicorn run
@@ -30,5 +31,5 @@ $ uvicorn main:aroio_api --reload
 ```
 or
 ```
-$ scripts/startApi.sh
+$ ./scripts/startApi.sh
 ```

@@ -1,8 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-import uvicorn
-from routers import settings
+from routers import settings, oauth
 
 ###############
 # Setup
@@ -21,3 +20,4 @@ aroio_api.add_middleware(
 )
 
 aroio_api.include_router(settings.router)
+aroio_api.include_router(oauth.router)
