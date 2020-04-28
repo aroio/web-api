@@ -2,7 +2,8 @@ from pydantic import BaseModel
 from typing import Optional, List
 import json
 import datetime
-from security import Security
+from auth import Authentication
+
 
 class NetworkConfig(BaseModel):
     hostname: str = "Aroio"
@@ -25,7 +26,7 @@ class SystemConfig(BaseModel):
     updateserver: str = "http://www.abacus-electronics.de/aroio-4"
     usebeta: bool = False
     platform: str = "AroioSU"
-    userpasswd: str = Security.hash_password("abacus")  # default password
+    userpasswd: str = Authentication.hash_password("abacus")  # default password
     known_version: str = "4.16.82"
     btkey: str = "2107"
     advanced: bool = False

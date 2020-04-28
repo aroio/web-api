@@ -1,4 +1,13 @@
-from models.aroio import Aroio, Configuration, NetworkConfig, SystemConfig, StreamingConfig, AudioConfig, ConvolverConfig, Filter
+from models import (
+    Aroio,
+    Configuration,
+    NetworkConfig,
+    SystemConfig,
+    StreamingConfig,
+    AudioConfig,
+    ConvolverConfig,
+    Filter
+)
 from typing import List
 import json
 import yaml
@@ -89,3 +98,6 @@ class DataSource:
     
         with open(translation, "r") as yml_file:
             return yaml.safe_load(yml_file)
+
+# Import this shit Singleton style!
+datasource = DataSource()
