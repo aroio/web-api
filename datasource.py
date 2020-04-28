@@ -15,10 +15,13 @@ class DataSource:
         """Reads data of Aroio from userconfig"""
         try:
             with open(self.aroio_path, "r") as json_file:
-                return Aroio.create_from_json(json_file)
+                return Aroio.create_from_json(json_str=json_file)
         except IOError:
             print("Database not accessible, generate Database.")
-            return self.sync_aroio(Aroio.initial_aroio())
+            aroio = Aroio.initial_aroio()
+            # Save aroio as the initial database model
+            self.save(aroio=aroio)
+            return aroio
 
 
     def sync(self,
@@ -41,8 +44,8 @@ class DataSource:
         The more detailed settings would override the more general settings.
         E.g. a SystemConfig would override the SystemConfig set by the Configuration object.
         """
-
         db = self.load_aroio()
+
         if aroio is not None:
             db = aroio
         if configuration is not None:
@@ -60,10 +63,16 @@ class DataSource:
         if filters is not None:
             db.configuration.convolver.filters = filters
         
-        with open(self.aroio_path, 'w') as f:
-            f.write(json.dumps(db.dict()))
-            f.close()
+        self.save(aroio=db)
+
         return db
+
+
+    def save(self, aroio: Aroio):
+        """Saving an aroio object"""
+        with open(self.aroio_path, 'w') as f:
+            f.write(json.dumps(aroio.dict()))
+            f.close()
 
 
     def load_translations(self, lang: str):

@@ -31,5 +31,5 @@ $ uvicorn main:aroio_api --reload
 ```
 or
 ```
-$ scripts/startApi.sh
+$ ./scripts/startApi.sh
 ```
