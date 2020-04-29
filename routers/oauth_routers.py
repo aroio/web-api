@@ -32,23 +32,6 @@ def create_access_token(
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/token")
 
 
-@router.post("/token", tags=["auth"])
-def login_for_access_token(formData: OAuth2PasswordRequestForm=Depends()):
-    db_aroio: Aroio = datasource.load_aroio()
-    auth_result = Authentication.authenticate(
-        aroio_name=db_aroio.name,
-        aroio_password=db_aroio.configuration.system.userpasswd,
-        username=formData.username,
-        password=formData.password)
-    if not auth_result:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect username or password",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
-    return create_access_token(data={"sub": db_aroio.dict()}) 
-
-
 def get_auth_aroio(token: str = Depends(oauth2_scheme)):
     """Getting an authenticated Aroio"""
     credentials_exception = HTTPException(
@@ -69,3 +52,43 @@ def get_auth_aroio(token: str = Depends(oauth2_scheme)):
     if aroio.name != aroio_name:
         raise credentials_exception
     return aroio
+
+
+@router.post("/token", tags=["auth"])
+def login_for_access_token(formData: OAuth2PasswordRequestForm=Depends()):
+    db_aroio: Aroio = datasource.load_aroio()
+    auth_result = Authentication.authenticate(
+        aroio_name=db_aroio.name,
+        aroio_password=db_aroio.password,
+        username=formData.username,
+        password=formData.password)
+    if not auth_result:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    return create_access_token(data={"sub": db_aroio.dict()})
+
+
+class AroioSetup(BaseModel):
+    name: str
+    password: str
+    description: str
+
+
+@router.patch("/aroio", tags=["auth"])
+def update_aroio_setup(setup: AroioSetup, aroio: Aroio = Depends(get_auth_aroio)):
+    """Changing the base Aroio setup with name, password and 
+    description. Returns a new access token, that must be used 
+    for further use of this API"""
+    
+    aroio.name = setup.name
+    aroio.password = Authentication.hash_password(setup.password)
+    aroio.description = setup.description
+
+    datasource.save(aroio=aroio)
+
+    return create_access_token(data={"sub": aroio.dict()})
+
+
