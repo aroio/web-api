@@ -26,7 +26,6 @@ class SystemConfig(BaseModel):
     updateserver: str = "http://www.abacus-electronics.de/aroio-4"
     usebeta: bool = False
     platform: str = "AroioSU"
-    userpasswd: str = Authentication.hash_password("abacus")  # default password
     known_version: str = "4.16.82"
     btkey: str = "2107"
     advanced: bool = False
@@ -121,6 +120,7 @@ class Configuration(BaseModel):
 
 class Aroio(BaseModel):
     name: str = "aroio"
+    password: str = Authentication.hash_password("abacus")  # default password
     timestamp: float = datetime.datetime.now().timestamp()
     description: str = "This is a raw Aroio Configuration without any device specifications. ÜÄÖ"
     initial_config: bool = True
