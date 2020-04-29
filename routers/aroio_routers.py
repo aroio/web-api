@@ -77,6 +77,12 @@ async def load_filter(filter_id: int, aroio: Aroio = Depends(get_auth_aroio)):
 async def create_filter(filter: Filter, aroio: Aroio = Depends(get_auth_aroio)):
     """Creates a new filter in the database. Returns the created filter with its id"""
     filters = aroio.configuration.convolver.filters
+    if len(filters) >= 10:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Only 10 filters are allowed with the userconfig.txt pattern"
+        )
+    # compute next possible filter id by maximum id
     filter_id = max([f.id for f in filters]) + 1
     filter_in_db = FilterInDb(id=filter_id, **filter.dict())
     aroio.configuration.convolver.filters.append(filter_in_db)
