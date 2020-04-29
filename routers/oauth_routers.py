@@ -19,7 +19,7 @@ TOKEN_TYPE = "bearer"
 
 def create_access_token(
     data: dict,
-    expires_delta: timedelta = timedelta(days==ACCESS_TOKEN_EXPIRE_DAYS)) -> Token:
+    expires_delta: timedelta = timedelta(days=ACCESS_TOKEN_EXPIRE_DAYS)) -> Token:
     """Creates a JWT with default time delta of 30 minutes"""
     expire = datetime.utcnow() + expires_delta
     to_encode = data.copy()
