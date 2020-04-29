@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from routers import settings, oauth, languages
+from routers import aroio_routers, oauth_routers, languages_routers
 
 ###############
 # Setup
@@ -19,6 +19,6 @@ aroio_api.add_middleware(
     allow_headers=["*"],
 )
 
-aroio_api.include_router(settings.router)
-aroio_api.include_router(oauth.router)
-aroio_api.include_router(languages.router)
+aroio_api.include_router(aroio_routers.router)
+aroio_api.include_router(oauth_routers.router)
+aroio_api.include_router(languages_routers.router)

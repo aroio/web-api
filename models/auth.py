@@ -6,4 +6,4 @@ class Token(BaseModel):
 
 
 class TokenData(BaseModel):
-    username: str = None
+    aroio_name: str = None
