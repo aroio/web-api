@@ -12,14 +12,14 @@ from auth import Authentication
 
 router = APIRouter()
 
-ACCESS_TOKEN_EXPIRE_MINUTES = 15
+ACCESS_TOKEN_EXPIRE_DAYS = 1
 ALGORITHM = "HS256"
 SECRET = "81acf31fcffa143203476a6f773aebcb2926c7ccefdcb54c9e4699a950e620e9"
 TOKEN_TYPE = "bearer"
 
 def create_access_token(
     data: dict,
-    expires_delta: timedelta = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)) -> Token:
+    expires_delta: timedelta = timedelta(days==ACCESS_TOKEN_EXPIRE_DAYS)) -> Token:
     """Creates a JWT with default time delta of 30 minutes"""
     expire = datetime.utcnow() + expires_delta
     to_encode = data.copy()
