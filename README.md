@@ -23,6 +23,12 @@ All requirements can be installed with pip. Required dependencies are:
 - [`uvicorn`](https://www.uvicorn.org/)
 - [`pyyaml`](https://pyyaml.org/wiki/PyYAMLDocumentation)
 - [`PyJWT`](https://pyjwt.readthedocs.io/en/latest/)
+- [`python-multipart`](https://github.com/andrew-d/python-multipart)
+
+To install all requirements run
+```
+$ pip install -r requirements.txt
+```
 
 ## Run API:
 To start the ASGI server via uvicorn run
