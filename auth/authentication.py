@@ -1,11 +1,4 @@
-from datetime import datetime, timedelta
 from hashlib import sha512
-
-import jwt
-from fastapi import APIRouter, Depends
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from jwt import PyJWTError
-from pydantic import BaseModel
 
 class Authentication:
 
