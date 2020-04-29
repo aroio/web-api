@@ -1,6 +1,8 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from data import datasource
 from typing import List
+
+from .oauth_routers import get_auth_aroio
 from models import (
     Aroio,
     NetworkConfig,
@@ -12,9 +14,9 @@ from models import (
 router = APIRouter()
 
 @router.get("/settings", tags=["settings"])
-async def get_aroio():
+async def get_aroio(aroio: Aroio = Depends(get_auth_aroio)):
     """Get saved Aroio from system."""
-    return datasource.load_aroio()
+    return aroio
 
 
 @router.patch("/settings", tags=["settings"])
