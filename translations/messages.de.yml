@@ -130,3 +130,56 @@ aroio:
           label: WLAN Passwort
           placeholder: '*******'
           help: Tragen Sie hier das Passwort Ihres WLAN Netzwerkes ein.
+
+form:
+  error:
+    required: Dieses Feld wird benötigt
+
+security:
+  login:
+    labels:
+      email: Benutzername
+      password: Passwort
+      password_confirm: Passwort bestätigen
+      login: Anmelden
+      reset: Passwort vergessen?
+
+    meta:
+      title: Login - ABACUS electronics AroioOS
+      description: Login für Ihr AroioOS Streaming System
+      keywords: login, abacus, electronics, aroio, hifi
+
+  logout:
+    meta:
+      title: Logout - ABACUS electronics AroioOS
+      description: Logout für Ihr AroioOS Streaming System
+      keywords: logout, abacus, electronics, aroio, hifi
+
+  not_found:
+    title: 404 - Seite nicht gefunden
+    description: Bitte entschuldigen Sie, die angeforderte Seite konnten wir leider nicht finden.
+
+    meta:
+      title: 404 - ABACUS electronics AroioOS
+      description: Bitte entschuldigen Sie, die angeforderte Seite konnten wir leider nicht finden.
+      keywords: 404, abacus, electronics, aroio, hifi
+
+  password_reset:
+    title: Passwort Zurücksetzen
+    success: Ihr Passwort wurde erfolgreich geändert.
+    labels:
+      reset: Neues Passwort setzen
+    meta:
+      title: Passwort Zurücksetzen - ABACUS electronics AroioOS
+      keywords: password-reset, abacus, electronics, aroio, hifi
+
+  password_request:
+    title: Passwort anfordern
+    success: Ein neues Passwort wurde erfolgreich angefordert
+    labels:
+      request: Neues Passwort anfordern
+      back_to_login: Zurück zum Login
+    meta:
+      title: Passwort anfordern - ABACUS electronics AroioOS
+      description: Passwort anfordern für Ihr AroioOS.
+      keywords: password-request, abacus, electronics, aroio, hifi
