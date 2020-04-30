@@ -43,7 +43,7 @@ $ ./scripts/startApi.sh
 
 # AroioOS Linux Build
 
-use google cloud platform with an nice and powerful setup and do your AroioOS Kernel Build via ssh on a virtual maschine.
+use google cloud platform with an nice and powerful setup with a shitload of RAM and do your AroioOS Kernel Build via ssh on a virtual maschine.
 
 ```
 $ sudo apt install -y sed make binutils build-essential gcc g++ bash patch gzip bzip2 perl tar cpio python unzip rsync file bc wget git screen flex
