@@ -6,7 +6,6 @@ Start virtual python environment if you don't have python3 running
 
 setup:
 ```
-$ mkdir venv
 $ python3 -m venv venv
 ```
 activate:
