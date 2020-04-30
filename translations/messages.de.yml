@@ -46,7 +46,28 @@ aroio:
         convolution: Audio Convolution
         convolution_disabled: Audio-Convolution ist nicht aktiviert
         pre_filter: Pre-Filter beim Booten
-
+    streaming:
+      forms:
+        playername:
+          label: Playername
+          placeholder: Aroio Küche
+          help: Geben Sie hier einen einzigartigen Playernamen für Ihren Aroio an. Damit ist der Aroio als Audiogerät sichtbar.
+        servername:
+          label: Servername
+          placeholder: Some Servername
+          help: Hier können Sie zwischen manueller/fester IP Vergabe oder automatischer Konfiguration via DHCP wählen. Denken Sie daran, dass Sie durch die Eingabe von inkorrekten Daten ihren Aroio nicht mehr so einfach im Netzwerk wieder finden können oder ggfs. das Gerät auf seine Ursprungskonfiguration zurückstezen müssen.
+        serverport:
+          label: Serverport
+          placeholder: 123.456.789.12
+          help: Geben Sie eine IP Adresse an, welche Ihrem Heimnetzwerk entspricht.
+        squeezeuser:
+          label: Squeezebox Benutzer
+          plazeholder: 255.255.255.0
+          help: Geben Sie hier die Subnetzmaske ihres Heimnetzes an, in den meisten Fällen ist 255.255.255.0 korrekt.
+        squeezepwd:
+          label: Squeezebox Passwort
+          plazeholder: 255.255.255.0
+          help: Geben Sie hier die Subnetzmaske ihres Heimnetzes an, in den meisten Fällen ist 255.255.255.0 korrekt.
     network:
       title: Netzwerk
       connection:
