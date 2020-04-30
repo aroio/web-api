@@ -5,9 +5,15 @@ aroio:
 
   cta:
     save: Speichern
+    back: Zurück
     add_filter: Filter hinzufügen
-
   pages:
+    imprint:
+      title: Impressum
+    abacus:
+      title: ABACUS
+    support:
+      title: AroioOS Support
     security:
       select_device:
         title: Bitte wählen Sie ihr Aroio Gerät aus
