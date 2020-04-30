@@ -53,9 +53,16 @@ def get_auth_aroio(token: str = Depends(oauth2_scheme)):
         raise credentials_exception
     return aroio
 
+class LoginForm(BaseModel):
+    username: str
+    password: str
 
 @router.post("/token", tags=["auth"])
-def login_for_access_token(formData: OAuth2PasswordRequestForm=Depends()):
+# NOTE: Use OAuth2PasswordRequestForm for debugging in `/docs` 
+#       route. Using the LoginForm for JSON request body 
+#       availability.
+# def login_for_access_token(formData: OAuth2PasswordRequestForm=Depends()):
+def login_for_access_token(formData: LoginForm=Depends()):
     db_aroio: Aroio = datasource.load_aroio()
     if db_aroio.authentication_enabled:
         auth_result = Authentication.authenticate(

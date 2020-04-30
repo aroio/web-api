@@ -1,4 +1,4 @@
-fastapi
+fastapi==0.45.0
 uvicorn
 pyyaml
 PyJWT
