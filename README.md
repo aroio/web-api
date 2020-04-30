@@ -41,7 +41,7 @@ $ ./scripts/startApi.sh
 ```
 
 
-#AroioOS Linux Build
+# AroioOS Linux Build
 
 use google cloud platform with an nice and powerful setup and do your AroioOS Kernel Build via ssh on a virtual maschine.
 
