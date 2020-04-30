@@ -2,13 +2,14 @@ from datetime import datetime, timedelta
 
 import jwt
 from jwt import PyJWTError
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from pydantic import BaseModel
 
 from data import datasource
 from models import Aroio, Token, TokenData
 from auth import Authentication
+from exceptions import UnauthorizedException
 
 router = APIRouter()
 
@@ -34,10 +35,9 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/token")
 
 def get_auth_aroio(token: str = Depends(oauth2_scheme)):
     """Getting an authenticated Aroio"""
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
-        headers={"WWW-Authenticate": "Bearer"},
+    credentials_exception = UnauthorizedException(
+        detail="Could not validate credentials", 
+        headers={"WWW-Authenticate": "Bearer"}
     )
     try:
         payload = jwt.decode(token, key=SECRET, algorithms=[ALGORITHM])
@@ -71,10 +71,9 @@ def login_for_access_token(formData: LoginForm=Depends()):
             username=formData.username,
             password=formData.password)
         if not auth_result:
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
+            raise UnauthorizedException(
                 detail="Incorrect username or password",
-                headers={"WWW-Authenticate": "Bearer"},
+                headers={"WWW-Authenticate": "Bearer"}
             )
 
     return create_access_token(data={"sub": db_aroio.dict()})
@@ -101,7 +100,10 @@ def update_aroio_setup(setup: AroioSetup, aroio: Aroio = Depends(get_auth_aroio)
         password=setup.old_password
     )
     if not authorized:
-        raise HTTPException(status_code=401, detail="Not authorized changing authorization parameters")
+        raise UnauthorizedException(
+            detail="Not authorized changing authorization parameters",
+            headers={"WWW-Authenticate": "Bearer"}
+        )
 
     aroio.name = setup.name
     aroio.password = Authentication.hash_password(setup.password)
@@ -111,5 +113,3 @@ def update_aroio_setup(setup: AroioSetup, aroio: Aroio = Depends(get_auth_aroio)
     datasource.save(aroio=aroio)
 
     return create_access_token(data={"sub": aroio.dict()})
-
-
