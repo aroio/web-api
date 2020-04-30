@@ -125,6 +125,7 @@ class Configuration(BaseModel):
 class Aroio(BaseModel):
     name: str = "aroio"
     password: str = Authentication.hash_password("abacus")  # default password
+    authentication_enabled: bool = True
     timestamp: float = datetime.datetime.now().timestamp()
     description: str = "This is a raw Aroio Configuration without any device specifications. ÜÄÖ"
     initial_config: bool = True
