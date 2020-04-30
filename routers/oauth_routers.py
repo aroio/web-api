@@ -35,10 +35,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/token")
 
 def get_auth_aroio(token: str = Depends(oauth2_scheme)):
     """Getting an authenticated Aroio"""
-    credentials_exception = UnauthorizedException(
-        detail="Could not validate credentials", 
-        headers={"WWW-Authenticate": "Bearer"}
-    )
+    credentials_exception = UnauthorizedException(detail="Could not validate credentials")
     try:
         payload = jwt.decode(token, key=SECRET, algorithms=[ALGORITHM])
         aroio_dict = payload.get("sub")
