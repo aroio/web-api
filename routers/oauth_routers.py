@@ -62,7 +62,7 @@ class LoginForm(BaseModel):
 #       route. Using the LoginForm for JSON request body 
 #       availability.
 # def login_for_access_token(formData: OAuth2PasswordRequestForm=Depends()):
-def login_for_access_token(formData: LoginForm=Depends()):
+def login_for_access_token(formData: LoginForm):
     db_aroio: Aroio = datasource.load_aroio()
     if db_aroio.authentication_enabled:
         auth_result = Authentication.authenticate(
