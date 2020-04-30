@@ -26,7 +26,7 @@ def create_access_token(
     to_encode = data.copy()
     to_encode.update({"exp": expire})
     access_token = jwt.encode(to_encode, key=SECRET, algorithm=ALGORITHM)
-    return Token(access_token=access_token, token_type=TOKEN_TYPE)
+    return Token(token=access_token, token_type=TOKEN_TYPE)
 
 
 # Scheme to be used for the authentication
