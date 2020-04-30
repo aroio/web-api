@@ -74,6 +74,7 @@ def login_for_access_token(formData: OAuth2PasswordRequestForm=Depends()):
 
 
 class AroioSetup(BaseModel):
+    old_password: str
     name: str
     password: str
     description: str
@@ -82,10 +83,19 @@ class AroioSetup(BaseModel):
 
 @router.patch("/aroio", tags=["auth"])
 def update_aroio_setup(setup: AroioSetup, aroio: Aroio = Depends(get_auth_aroio)):
-    """Changing the base Aroio setup with name, password and 
-    description. Returns a new access token, that must be used 
-    for further use of this API"""
-    
+    """Changing the base Aroio setup with name, password,
+    description and authentication_enabled. Returns new access token,
+    that must be used for further use of this API. For authentication 
+    the current password must be given"""
+    authorized = Authentication.authenticate(
+        aroio_name=aroio.name,
+        aroio_password=aroio.password,
+        username=aroio.name,
+        password=setup.old_password
+    )
+    if not authorized:
+        raise HTTPException(status_code=401, detail="Not authorized changing authorization parameters")
+
     aroio.name = setup.name
     aroio.password = Authentication.hash_password(setup.password)
     aroio.description = setup.description
