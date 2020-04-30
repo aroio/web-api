@@ -7,6 +7,7 @@ Start virtual python environment if you don't have python3 running
 setup:
 ```
 $ python3 -m venv venv
+$ pip install -r requirements.txt
 ```
 activate:
 ``` 
@@ -25,10 +26,6 @@ All requirements can be installed with pip. Required dependencies are:
 - [`PyJWT`](https://pyjwt.readthedocs.io/en/latest/)
 - [`python-multipart`](https://github.com/andrew-d/python-multipart)
 
-To install all requirements run
-```
-$ pip install -r requirements.txt
-```
 
 ## Run API:
 To start the ASGI server via uvicorn run
