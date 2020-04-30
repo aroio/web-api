@@ -8,6 +8,9 @@ from models import (
     Configuration,
     NetworkConfig,
     ConvolverConfig,
+    SystemConfig,
+    StreamingConfig,
+    AudioConfig,
     Filter,
     FilterInDb
 )
@@ -50,6 +53,31 @@ async def update_convolver_config(convolver: ConvolverConfig, aroio: Aroio = Dep
     aroio.configuration.convolver = convolver
     datasource.save(aroio=aroio)
     return aroio.configuration.convolver
+
+
+@router.patch("/config/system", tags=["config"])
+async def update_system_config(system_config: SystemConfig, aroio: Aroio = Depends(get_auth_aroio)):
+    """Update the system configuration."""
+    aroio.configuration.system = system_config
+    datasource.save(aroio=aroio)
+    return aroio.configuration.system
+
+
+@router.patch("/config/streaming", tags=["config"])
+async def update_streaming_config(streaming_config: StreamingConfig, aroio: Aroio = Depends(get_auth_aroio)):
+    """Update the streaming configuration."""
+    aroio.configuration.streaming = streaming_config
+    datasource.save(aroio=aroio)
+    return aroio.configuration.streaming
+
+
+@router.patch("/config/audio", tags=["config"])
+async def update_audio_config(audio_config: AudioConfig, aroio: Aroio = Depends(get_auth_aroio)):
+    """Update the streaming configuration."""
+    aroio.configuration.audio = audio_config
+    datasource.save(aroio=aroio)
+    return aroio.configuration.audio
+
 
 ##########
 # FILTER #
