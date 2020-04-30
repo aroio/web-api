@@ -58,11 +58,15 @@ class LoginForm(BaseModel):
     password: str
 
 @router.post("/token", tags=["auth"])
-# NOTE: Use OAuth2PasswordRequestForm for debugging in `/docs` 
-#       route. Using the LoginForm for JSON request body 
-#       availability.
-# def login_for_access_token(formData: OAuth2PasswordRequestForm=Depends()):
+def debug_login_for_access_token(formData: OAuth2PasswordRequestForm=Depends()):
+    """This route is only for debugging in the `/docs` route."""
+    formData = LoginForm(username=formData.username, password=formData.password)
+    return login_for_access_token(formData=formData)
+
+
+@router.post("/token", tags=["auth"])
 def login_for_access_token(formData: LoginForm):
+    """The login route to use in production"""
     db_aroio: Aroio = datasource.load_aroio()
     if db_aroio.authentication_enabled:
         auth_result = Authentication.authenticate(
