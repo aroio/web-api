@@ -1,7 +1,8 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, status
 from data import datasource
 from typing import List
 
+from exceptions import ForbiddenException, NotFoundException
 from .oauth_routers import get_auth_aroio
 from models import (
     Aroio,
@@ -93,7 +94,7 @@ async def load_filter(filter_id: int, aroio: Aroio = Depends(get_auth_aroio)):
     """Get filter with filter_id"""
     filters = aroio.configuration.convolver.filters
     if filter_id not in [f.id for f in filters]:
-        raise HTTPException(status_code=404, detail=f'Not fount filter with id {filter_id}')
+        raise NotFoundException(detail=f'Not fount filter with id {filter_id}')
 
     for filter in filters:
         if filter.id == filter_id:
@@ -106,10 +107,8 @@ async def create_filter(filter: Filter, aroio: Aroio = Depends(get_auth_aroio)):
     """Creates a new filter in the database. Returns the created filter with its id"""
     filters = aroio.configuration.convolver.filters
     if len(filters) >= 10:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Only 10 filters are allowed with the userconfig.txt pattern"
-        )
+        raise ForbiddenException(detail="Only 10 filters are allowed with the userconfig.txt pattern")
+
     # compute next possible filter id by maximum id
     filter_id = max([f.id for f in filters]) + 1
     filter_in_db = FilterInDb(id=filter_id, **filter.dict())
@@ -127,7 +126,7 @@ async def delete_filter(filter_id: int, aroio: Aroio = Depends(get_auth_aroio)):
             filter_to_delete = idx
 
     if filter_to_delete == -1:
-        raise HTTPException(status_code=404, detail=f'Filter to delete not found. Filter id: {filter_to_delete}')
+        raise NotFoundException(detail=f'Filter to delete not found. Filter id: {filter_to_delete}')
 
     aroio.configuration.convolver.filters.pop(filter_to_delete)
     datasource.save(aroio=aroio)
