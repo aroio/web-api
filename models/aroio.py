@@ -28,8 +28,13 @@ class SystemConfig(BaseModel):
     platform: str = "AroioSU"
     known_version: str = "4.16.82"
     btkey: str = "2107"
-    advanced: bool = False
+
+
+class WebinterfaceConfig(BaseModel):
     display_rotate: bool = False
+    dark_mode: bool = False
+    initial_setup: bool = True
+    advanced_configuration: bool = False
 
 
 class StreamingConfig(BaseModel):
@@ -40,16 +45,31 @@ class StreamingConfig(BaseModel):
     playername: str = "Aroio Player"
 
 
-class AudioConfig(BaseModel):
+class PlayerConfig(BaseModel):
+    mscoding: bool = False
+    measurement_output: str = "vol-plug-ms"
     rate: int = 176400
     sprate: int = 44100
     channels: int = 2
-    mscoding: bool = False
+    squeezelite: bool = False
+    gmediarender: bool = False
+    shairportsync: bool = False
+    bluealsaaplay: bool = False
+    input: bool = False
+    netjack: bool = False
+
+
+class OutputConfig(BaseModel):
+    audio_output: str = "jack-bfms"
+    direct_config: PlayerConfig = PlayerConfig()
+    bus_config: PlayerConfig = PlayerConfig()
+    convolver_config: PlayerConfig = PlayerConfig()
+
+
+class AudioConfig(BaseModel):
     soundcard: str = "AroioDAC"
     resampling: str = "speexrate_medium"
     volume_start: int = -15
-    audio_output: str = "jack-bfms"
-    measurement_output: str = "vol-plug-ms"
     debug: bool = False
     jackbuffer: int = 8192
     jackperiod: int = 3
@@ -61,38 +81,8 @@ class AudioConfig(BaseModel):
     sp_outbuffer: int = 32768
     sp_period: int = 2
     bf_partitions: int = 2
-    dmix_squeezelite: Optional[bool] = False
-    dmix_gmediarender: Optional[bool] = False
-    dmix_shairportsync: Optional[bool] = False
-    dmix_bluealsaaplay: Optional[bool] = False
-    dmixms_squeezelite: Optional[bool] = False
-    dmixms_gmediarender: Optional[bool] = False
-    dmixms_shairportsync: Optional[bool] = False
-    dmixms_bluealsaaplay: Optional[bool] = False
-    jack_squeezelite: Optional[bool] = False
-    jack_gmediarender: Optional[bool] = False
-    jack_shairportsync: Optional[bool] = False
-    jack_bluealsaaplay: Optional[bool] = False
-    jack_netjack: Optional[bool] = False
-    jack_input: Optional[bool] = False
-    jackms_squeezelite: Optional[bool] = False
-    jackms_gmediarender: Optional[bool] = False
-    jackms_shairportsync: Optional[bool] = False
-    jackms_bluealsaaplay: Optional[bool] = False
-    jackms_netjack: Optional[bool] = False
-    jackms_input: Optional[bool] = False
-    jackbf_squeezelite: Optional[bool] = False
-    jackbf_gmediarender: Optional[bool] = False
-    jackbf_shairportsync: Optional[bool] = False
-    jackbf_bluealsaaplay: Optional[bool] = False
-    jackbf_netjack: Optional[bool] = False
-    jackbf_input: Optional[bool] = False
-    jackbfms_squeezelite: Optional[bool] = False
-    jackbfms_gmediarender: Optional[bool] = False
-    jackbfms_shairportsync: Optional[bool] = False
-    jackbfms_bluealsaaplay: Optional[bool] = False
-    jackbfms_netjack: Optional[bool] = False
-    jackbfms_input: Optional[bool] = False
+    output_configuration: OutputConfig = OutputConfig()
+
 
 class Filter(BaseModel):
     is_active: bool = False
@@ -120,6 +110,7 @@ class Configuration(BaseModel):
     streaming: StreamingConfig = StreamingConfig()
     audio: AudioConfig = AudioConfig()
     convolver: ConvolverConfig = ConvolverConfig()
+    webinterface: WebinterfaceConfig = WebinterfaceConfig()
 
 
 class Aroio(BaseModel):
@@ -128,7 +119,6 @@ class Aroio(BaseModel):
     authentication_enabled: bool = True
     timestamp: float = datetime.datetime.now().timestamp()
     description: str = "This is a raw Aroio Configuration without any device specifications. ÜÄÖ"
-    initial_config: bool = True
     configuration: Configuration = Configuration()
 
     @staticmethod

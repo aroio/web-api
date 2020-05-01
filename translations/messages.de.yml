@@ -6,7 +6,9 @@ aroio:
   cta:
     save: Speichern
     back: Zurück
+    close: Schließen
     add_filter: Filter hinzufügen
+    set_password: Neues Passwort speichern
   pages:
     imprint:
       title: Impressum
@@ -14,6 +16,38 @@ aroio:
       title: ABACUS
     support:
       title: AroioOS Support
+    webinterface:
+      title: AroioOS Webinterface
+      help: Hier können Sie Einstellungen vornehmen, welche ausschließlich das Webinterface und die Darstellung dessen betreffen.
+      setting: Einstellungen
+      password: Passwort
+      forms:
+        username:
+          label: Nutzername
+          placeholder: Max Mustermann
+          help: Geben Sie Ihren Namen an, damit wir Sie Ansprechen könne. Wir übertragen keine dieser Daten in das Internet und speichern die Daten ausschließlich auf diesem Gerät.
+        description:
+          label: Beschreibung
+          placeholder: Dies ist der Aroio von Max Mustermann. Er steht in der Küche.
+          help: Gib eine Beschreibung für den Aroio an, welche im Netzwerk für weitere Informationen für das Gerät ersichtlich ist.
+        authentication_enabled:
+          label: Authentifizierung
+          help: 'Sie können die Authentifizierung des Webinterfaces deaktivieren um ohne Anmeldung auf das Webinterface zu gelangen. Bedenken Sie aber, dass dies eine erhebliche Sicherheitslücke darstellt und für Dritte eine potenzielle Möglichkeit bietet, in Ihr Heimnetzwerk zu gelangen. Dadurch können unter Umständen sensible Daten von einem anderen Gerät in Ihrem Netzwerk nach außen gelangen.'
+        dark_mode:
+          label: Dark Mode
+          help: Sie können hier zwischen einem dunklen und einem hellen Design wechseln.
+        advanced_configuration:
+          label: Erweiterte Konfiguration
+          help: Geben Sie hier erweiterte Einstellungen für das Webinterface frei.
+        new_password:
+          label: Neues Passwort
+          placeholder: aroio
+          help: Bitte setze möglichst ein Passwort mit Groß- und Kleinbuchstaben, Zahlen und Zeichen um die größtmögliche Sicherheit zu gewähren.
+        password_repeated:
+          label: Neus Passwort wiederholen
+          placeholder: aroio
+          help: Bitte wiederhole das obere Passwort um Schreibfehler zu verhindern.
+
     security:
       select_device:
         title: Bitte wählen Sie ihr Aroio Gerät aus
@@ -45,6 +79,11 @@ aroio:
         items:
           ms: M/S
           stereo: Stereo
+    system:
+      forms:
+        display_rotate:
+          label: Bildschirm um 90° drehen
+          help: Damit wird das HDMI Ausgangssignal um 90° gedreht.
 
     convolver:
       settings:

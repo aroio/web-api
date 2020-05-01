@@ -12,12 +12,13 @@ from models import (
     SystemConfig,
     StreamingConfig,
     AudioConfig,
+    WebinterfaceConfig,
     Filter,
     FilterInDb
 )
 
-
 router = APIRouter()
+
 
 #########
 # AROIO #
@@ -27,6 +28,7 @@ router = APIRouter()
 async def get_aroio(aroio: Aroio = Depends(get_auth_aroio)):
     """Get saved Aroio from system."""
     return aroio
+
 
 ##########
 # CONFIG #
@@ -80,6 +82,14 @@ async def update_audio_config(audio_config: AudioConfig, aroio: Aroio = Depends(
     return aroio.configuration.audio
 
 
+@router.patch("/config/webinterface", tags=["config"])
+async def update_audio_config(webinterface_config: WebinterfaceConfig, aroio: Aroio = Depends(get_auth_aroio)):
+    """Update the webinterface configuration."""
+    aroio.configuration.webinterface = webinterface_config
+    datasource.save(aroio=aroio)
+    return aroio.configuration.webinterface
+
+
 ##########
 # FILTER #
 ##########
@@ -101,7 +111,6 @@ async def load_filter(filter_id: int, aroio: Aroio = Depends(get_auth_aroio)):
             return filter
 
 
-
 @router.post("/filters", tags=["filter"], status_code=status.HTTP_201_CREATED)
 async def create_filter(filter: Filter, aroio: Aroio = Depends(get_auth_aroio)):
     """Creates a new filter in the database. Returns the created filter with its id"""
@@ -114,7 +123,7 @@ async def create_filter(filter: Filter, aroio: Aroio = Depends(get_auth_aroio)):
     filter_in_db = FilterInDb(id=filter_id, **filter.dict())
     aroio.configuration.convolver.filters.append(filter_in_db)
     datasource.save(aroio=aroio)
-    return  filter_in_db
+    return filter_in_db
 
 
 @router.delete("/filters", tags=["filter"], status_code=status.HTTP_200_OK)

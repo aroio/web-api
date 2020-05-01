@@ -26,7 +26,7 @@ class DataSource:
             with open(self.aroio_path, "r") as json_file:
                 return Aroio.create_from_json(json_str=json_file)
         except IOError:
-            print("Database not accessible, generate Database.")
+            print("Database not accessable, generate Database.")
             aroio = Aroio.initial_aroio()
             # Save aroio as the initial database model
             self.save(aroio=aroio)
