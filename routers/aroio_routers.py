@@ -12,6 +12,7 @@ from models import (
     SystemConfig,
     StreamingConfig,
     AudioConfig,
+    OutputConfig,
     WebinterfaceConfig,
     Filter,
     FilterInDb
@@ -80,6 +81,14 @@ async def update_audio_config(audio_config: AudioConfig, aroio: Aroio = Depends(
     aroio.configuration.audio = audio_config
     datasource.save(aroio=aroio)
     return aroio.configuration.audio
+
+
+@router.patch("/config/audio/output-configuration", tags=["config"])
+async def update_audio_config(output_config: OutputConfig, aroio: Aroio = Depends(get_auth_aroio)):
+    """Update the streaming configuration."""
+    aroio.configuration.audio.output_configuration = output_config
+    datasource.save(aroio=aroio)
+    return aroio.configuration.audio.output_configuration
 
 
 @router.patch("/config/webinterface", tags=["config"])

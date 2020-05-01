@@ -49,7 +49,6 @@ class PlayerConfig(BaseModel):
     mscoding: bool = False
     measurement_output: str = "vol-plug-ms"
     rate: int = 176400
-    sprate: int = 44100
     channels: int = 2
     squeezelite: bool = False
     gmediarender: bool = False
@@ -60,7 +59,7 @@ class PlayerConfig(BaseModel):
 
 
 class OutputConfig(BaseModel):
-    audio_output: str = "jack-bfms"
+    audio_output: str = "vol-plug"
     direct_config: PlayerConfig = PlayerConfig()
     bus_config: PlayerConfig = PlayerConfig()
     convolver_config: PlayerConfig = PlayerConfig()
@@ -75,12 +74,13 @@ class AudioConfig(BaseModel):
     jackperiod: int = 3
     raw_player: str = "shairportsync"
     raw_playerms: str = "squeezelite"
+    shairplayrate: int = 44100
     squeeze_maxfrequency: int = 192000
     squeeze_intbuffer: int = 4096
     squeeze_outbuffer: int = 4096
     sp_outbuffer: int = 32768
     sp_period: int = 2
-    bf_partitions: int = 2
+    brutefirf_partitions: int = 2
     output_configuration: OutputConfig = OutputConfig()
 
 

@@ -19,7 +19,7 @@ aroio:
     webinterface:
       title: AroioOS Webinterface
       help: Hier können Sie Einstellungen vornehmen, welche ausschließlich das Webinterface und die Darstellung dessen betreffen.
-      setting: Einstellungen
+      settings: Einstellungen
       password: Passwort
       forms:
         username:
