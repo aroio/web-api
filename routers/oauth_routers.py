@@ -85,9 +85,8 @@ def login_for_access_token(formData: LoginForm):
 
 
 class AroioSetup(BaseModel):
-    old_password: str
+    verify_password: str
     name: str
-    password: str
     description: str
     authentication_enabled: bool = True
 
@@ -102,7 +101,7 @@ def update_aroio_setup(setup: AroioSetup, aroio: Aroio = Depends(get_auth_aroio)
         aroio_name=aroio.name,
         aroio_password=aroio.password,
         username=aroio.name,
-        password=setup.old_password
+        password=setup.verify_password
     )
     if not authorized:
         raise UnauthorizedException(
@@ -111,10 +110,26 @@ def update_aroio_setup(setup: AroioSetup, aroio: Aroio = Depends(get_auth_aroio)
         )
 
     aroio.name = setup.name
-    aroio.password = Authentication.hash_password(setup.password)
     aroio.description = setup.description
     aroio.authentication_enabled = setup.authentication_enabled
 
     datasource.save(aroio=aroio)
 
+    return create_access_token(data={"sub": aroio.dict()})
+
+
+class AroioPasswordForm(BaseModel):
+    old_password: str
+    new_password: str
+
+
+@router.patch("/aroio/password", tags=["auth"])
+async def change_aroio_password(form: AroioPasswordForm, aroio: Aroio = Depends(get_auth_aroio)):
+    """`new_password` replaces password for Aroio. `old_password` is required for authentication."""
+    auth = Authentication.authenticate(aroio_name=aroio.name, aroio_password=aroio.password, username=aroio.name, password=form.old_password)
+    if not auth:
+        raise UnauthorizedException(detail="Wrong password")
+    
+    aroio.password = form.new_password
+    datasource.save(aroio=aroio)
     return create_access_token(data={"sub": aroio.dict()})
