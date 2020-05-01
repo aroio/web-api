@@ -58,11 +58,11 @@ class LoginForm(BaseModel):
 # NOTE: For debugging purposes at the `/docs` route you can authenticate by 
 #       uncommenting this post route. Therefor the production route fails 
 #       with a 422 Unprocessable Entity.
-@router.post("/token", tags=["auth"])
-def debug_login_for_access_token(formData: OAuth2PasswordRequestForm=Depends()):
-    """This route is only for debugging in the `/docs` route."""
-    formData = LoginForm(username=formData.username, password=formData.password)
-    return login_for_access_token(formData=formData)
+# @router.post("/token", tags=["auth"])
+# def debug_login_for_access_token(formData: OAuth2PasswordRequestForm=Depends()):
+#     """This route is only for debugging in the `/docs` route."""
+#     formData = LoginForm(username=formData.username, password=formData.password)
+#     return login_for_access_token(formData=formData)
 
 
 @router.post("/token", tags=["auth"])
