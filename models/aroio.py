@@ -120,12 +120,3 @@ class Aroio(BaseModel):
     timestamp: float = datetime.datetime.now().timestamp()
     description: str = "This is a raw Aroio Configuration without any device specifications. ÜÄÖ"
     configuration: Configuration = Configuration()
-
-    @staticmethod
-    def initial_aroio():
-        return Aroio()
-
-    @staticmethod
-    def create_from_json(json_str: str):
-        aroio_db = json.load(json_str)
-        return Aroio(**aroio_db)

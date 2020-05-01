@@ -23,11 +23,13 @@ class DataSource:
     def load_aroio(self) -> Aroio:
         """Reads data of Aroio from userconfig"""
         try:
-            with open(self.aroio_path, "r") as json_file:
-                return Aroio.create_from_json(json_str=json_file)
+            with open(self.aroio_path) as f:
+                json_str = json.load(f)
+                aroio_db = json.loads(json_str)
+                return Aroio(**aroio_db)
         except IOError:
             print("Database not accessable, generate Database.")
-            aroio = Aroio.initial_aroio()
+            aroio = Aroio()
             # Save aroio as the initial database model
             self.save(aroio=aroio)
             return aroio
