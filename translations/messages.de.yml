@@ -79,6 +79,70 @@ aroio:
         items:
           ms: M/S
           stereo: Stereo
+
+
+
+      forms:
+        audioplayer:
+          label: Squeeze Playername
+          placeholder: Aroio Küche
+          help: Geben Sie einen Namen für Ihren Squeezelite Player an.
+        rate:
+          label: Resampling Frequenz
+          placeholder: Max Mustermann
+          help: Geben Sie Ihren Namen an, damit wir Sie Ansprechen könne. Wir übertragen keine dieser Daten in das Internet und speichern die Daten ausschließlich auf diesem Gerät.
+        soundcard:
+          label: Soundkarte
+          placeholder: Max Mustermann
+          help: Geben Sie Ihren Namen an, damit wir Sie Ansprechen könne. Wir übertragen keine dieser Daten in das Internet und speichern die Daten ausschließlich auf diesem Gerät.
+        volume_start:
+          label: Start-Lautstärke
+          placeholder: Max Mustermann
+          help: Geben Sie Ihren Namen an, damit wir Sie Ansprechen könne. Wir übertragen keine dieser Daten in das Internet und speichern die Daten ausschließlich auf diesem Gerät.
+        measurement_output:
+          label: Separter Ausgang zur Messung
+          placeholder: Max Mustermann
+          help: Geben Sie Ihren Namen an, damit wir Sie Ansprechen könne. Wir übertragen keine dieser Daten in das Internet und speichern die Daten ausschließlich auf diesem Gerät.
+        jackbuffer:
+          label: Jack Puffergröße
+          placeholder: Max Mustermann
+          help: Geben Sie Ihren Namen an, damit wir Sie Ansprechen könne. Wir übertragen keine dieser Daten in das Internet und speichern die Daten ausschließlich auf diesem Gerät.
+        jackperiod:
+          label: Jack Periodengröße
+          placeholder: Max Mustermann
+          help: Geben Sie Ihren Namen an, damit wir Sie Ansprechen könne. Wir übertragen keine dieser Daten in das Internet und speichern die Daten ausschließlich auf diesem Gerät.
+        squeeze_maxfrequency:
+          label: Max. Frequenz für den LMS
+          placeholder: Max Mustermann
+          help: Maximal von LMS ausgegebene Frequenz, darüber wird seitens LMS geresampelt. Hiermit wird serverseitiges Resampling erzwungen.
+        squeeze_intbuffer:
+          label: Interner Squeezelite Puffer
+          placeholder: Max Mustermann
+          help: Geben Sie Ihren Namen an, damit wir Sie Ansprechen könne. Wir übertragen keine dieser Daten in das Internet und speichern die Daten ausschließlich auf diesem Gerät.
+        squeeze_outbuffer:
+          label: Ausgabepuffer für Squeezelite
+          placeholder: Max Mustermann
+          help: Geben Sie Ihren Namen an, damit wir Sie Ansprechen könne. Wir übertragen keine dieser Daten in das Internet und speichern die Daten ausschließlich auf diesem Gerät.
+        sp_outbuffer:
+          label: Ausgabepuffer für ShAirPlay
+          placeholder: Max Mustermann
+          help: Geben Sie Ihren Namen an, damit wir Sie Ansprechen könne. Wir übertragen keine dieser Daten in das Internet und speichern die Daten ausschließlich auf diesem Gerät.
+        sp_period:
+          label: ShAirPlay Periode
+          placeholder: Max Mustermann
+          help: Geben Sie Ihren Namen an, damit wir Sie Ansprechen könne. Wir übertragen keine dieser Daten in das Internet und speichern die Daten ausschließlich auf diesem Gerät.
+        sp_samplerate:
+          label: ShAirPlay Ausgangs-Puffergröße
+          placeholder: Max Mustermann
+          help: Geben Sie Ihren Namen an, damit wir Sie Ansprechen könne. Wir übertragen keine dieser Daten in das Internet und speichern die Daten ausschließlich auf diesem Gerät.
+        bf_partitions:
+          label: Brutefir Partitionen
+          placeholder: Max Mustermann
+          help: Geben Sie Ihren Namen an, damit wir Sie Ansprechen könne. Wir übertragen keine dieser Daten in das Internet und speichern die Daten ausschließlich auf diesem Gerät.
+
+
+
+
     system:
       forms:
         display_rotate:
