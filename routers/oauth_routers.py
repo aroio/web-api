@@ -57,18 +57,8 @@ class LoginForm(BaseModel):
     password: str
 
 
-# NOTE: For debugging purposes at the `/docs` route you can authenticate by 
-#       uncommenting this post route. Therefor the production route fails 
-#       with a 422 Unprocessable Entity.
-# @router.post("/token", tags=["auth"])
-# def debug_login_for_access_token(formData: OAuth2PasswordRequestForm=Depends()):
-#     """This route is only for debugging in the `/docs` route."""
-#     loginForm = LoginForm(username=formData.username, password=formData.password)
-#     return login_for_access_token(formData=loginForm)
-
-
 @router.post("/token", tags=["auth"])
-def login_for_access_token(formData: OAuth2PasswordRequestForm=Depends()):
+def login_for_access_token(formData: LoginForm):
     """The login route to use in production"""
     db_aroio: Aroio = datasource.load_aroio()
     if db_aroio.authentication_enabled:
@@ -123,10 +113,10 @@ class AroioPasswordForm(BaseModel):
 @router.patch("/aroio/password", tags=["auth"])
 async def change_aroio_password(form: AroioPasswordForm, aroio: Aroio = Depends(get_auth_aroio)):
     """`new_password` replaces password for Aroio. `old_password` is required for authentication."""
-    auth = Authentication.authenticate(aroio_name=aroio.name, aroio_password=aroio.password, username=aroio.name, password=form.old_password)
+    auth = Authentication.verify_password(hashed=aroio.password, plain=form.old_password)
     if not auth:
         raise UnauthorizedException(detail="Wrong password")
     
-    aroio.password = form.new_password
+    aroio.password = Authentication.hash_password(password=form.new_password)
     datasource.save(aroio=aroio)
     return create_access_token(data={"sub": aroio.dict()})
