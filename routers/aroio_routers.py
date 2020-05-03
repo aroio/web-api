@@ -45,6 +45,9 @@ async def update_configuration(config: Configuration, aroio: Aroio = Depends(get
 @router.patch("/config/network", tags=["config"])
 async def update_network_config(network_config: NetworkConfig, aroio: Aroio = Depends(get_auth_aroio)):
     """Update the network configuration. Returns the updated network configuration."""
+    if not network_config.lan.valid_ipv4_addresses_or_none():
+        raise ForbiddenException(detail="Incorrect format of IPv4 addresses.")
+
     aroio.configuration.network = network_config
     datasource.save(aroio=aroio)
     return aroio.configuration.network
