@@ -1,7 +1,8 @@
+import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from routers import aroio_routers, oauth_routers, languages_routers
+from routers import aroio_routers, languages_routers, oauth_routers
 
 ###############
 # Setup
@@ -22,3 +23,6 @@ aroio_api.add_middleware(
 aroio_api.include_router(aroio_routers.router)
 aroio_api.include_router(oauth_routers.router)
 aroio_api.include_router(languages_routers.router)
+
+if __name__ == "__main__":
+    uvicorn.run(aroio_api, host="127.0.0.1", port=4200)

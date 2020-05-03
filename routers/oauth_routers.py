@@ -6,8 +6,10 @@ from fastapi import APIRouter, Depends, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from pydantic import BaseModel
 
+from typing import Union
+
 from data import datasource
-from models import Aroio, Token, TokenData
+from models import Aroio, Token
 from auth import Authentication
 from exceptions import UnauthorizedException
 
@@ -42,13 +44,13 @@ def get_auth_aroio(token: str = Depends(oauth2_scheme)):
         aroio_name = aroio_dict["name"]
         if aroio_name is None:
             raise credentials_exception
-        token_data = TokenData(aroio_name=aroio_name)
     except PyJWTError:
         raise credentials_exception
     aroio = datasource.load_aroio()
     if aroio.name != aroio_name:
         raise credentials_exception
     return aroio
+
 
 class LoginForm(BaseModel):
     username: str
@@ -61,12 +63,12 @@ class LoginForm(BaseModel):
 # @router.post("/token", tags=["auth"])
 # def debug_login_for_access_token(formData: OAuth2PasswordRequestForm=Depends()):
 #     """This route is only for debugging in the `/docs` route."""
-#     formData = LoginForm(username=formData.username, password=formData.password)
-#     return login_for_access_token(formData=formData)
+#     loginForm = LoginForm(username=formData.username, password=formData.password)
+#     return login_for_access_token(formData=loginForm)
 
 
 @router.post("/token", tags=["auth"])
-def login_for_access_token(formData: LoginForm):
+def login_for_access_token(formData: OAuth2PasswordRequestForm=Depends()):
     """The login route to use in production"""
     db_aroio: Aroio = datasource.load_aroio()
     if db_aroio.authentication_enabled:
@@ -97,12 +99,7 @@ def update_aroio_setup(setup: AroioSetup, aroio: Aroio = Depends(get_auth_aroio)
     description and authentication_enabled. Returns new access token,
     that must be used for further use of this API. For authentication 
     the current password must be given"""
-    authorized = Authentication.authenticate(
-        aroio_name=aroio.name,
-        aroio_password=aroio.password,
-        username=aroio.name,
-        password=setup.verify_password
-    )
+    authorized = Authentication.verify_password(plain=setup.verify_password, hashed=aroio.password)
     if not authorized:
         raise UnauthorizedException(
             detail="Not authorized changing authorization parameters",
