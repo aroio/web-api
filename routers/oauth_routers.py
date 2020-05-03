@@ -99,12 +99,7 @@ def update_aroio_setup(setup: AroioSetup, aroio: Aroio = Depends(get_auth_aroio)
     description and authentication_enabled. Returns new access token,
     that must be used for further use of this API. For authentication 
     the current password must be given"""
-    authorized = Authentication.authenticate(
-        aroio_name=aroio.name,
-        aroio_password=aroio.password,
-        username=aroio.name,
-        password=setup.verify_password
-    )
+    authorized = Authentication.verify_password(plain=setup.verify_password, hashed=aroio.password)
     if not authorized:
         raise UnauthorizedException(
             detail="Not authorized changing authorization parameters",

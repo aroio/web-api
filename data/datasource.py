@@ -24,8 +24,7 @@ class DataSource:
         """Reads data of Aroio from userconfig"""
         try:
             with open(self.aroio_path) as f:
-                json_str = json.load(f)
-                aroio_db = json.loads(json_str)
+                aroio_db = json.load(f)
                 return Aroio(**aroio_db)
         except IOError:
             print("Database not accessable, generate Database.")
