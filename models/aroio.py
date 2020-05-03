@@ -1,25 +1,40 @@
-from pydantic import BaseModel
-from typing import Optional, List
-import json
 import datetime
+from typing import List, Optional
+
+from pydantic import BaseModel
+
 from auth import Authentication
+from exceptions import ForbiddenException
+from data.validation import Validator
+
+class LAN(BaseModel):
+    dhcp: bool = True
+    ipaddr: Optional[str] = None
+    netmask: Optional[str] = None
+    dnsserv: Optional[str] = None
+    gateway: Optional[str] = None
+
+    def valid_ipv4_addresses_or_none(self):
+        """Returns if all addresses of LAN are IPv4 addresses, when dhcp is set to False."""
+        if self.dhcp:
+            return True
+        
+        for addr in [self.ipaddr, self.netmask, self.dnsserv, self.gateway]:
+            if not Validator.ipv4(address=addr):
+                return False
+        return True
+
+
+class WLAN(LAN):
+    ssid: Optional[str] = None
+    pwd: Optional[str] = None
 
 
 class NetworkConfig(BaseModel):
     hostname: str = "Aroio"
     wifi: bool = False
-    lan_dhcp: Optional[bool] = True
-    lan_ipaddr: Optional[str] = None
-    lan_netmask: Optional[str] = None
-    lan_dnsserv: Optional[str] = None
-    lan_gateway: Optional[str] = None
-    wlan_dhcp: Optional[bool] = True
-    wlan_ipaddr: Optional[str] = None
-    wlan_netmask: Optional[str] = None
-    wlan_dnsserv: Optional[str] = None
-    wlan_gateway: Optional[str] = None
-    wlanssid: Optional[str] = None
-    wlanpwd: Optional[str] = None
+    lan: LAN = LAN()
+    wlan: WLAN = WLAN()
 
 
 class SystemConfig(BaseModel):
