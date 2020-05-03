@@ -1,17 +1,15 @@
 from datetime import datetime, timedelta
+from exceptions import UnauthorizedException
 
 import jwt
-from jwt import PyJWTError
 from fastapi import APIRouter, Depends, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from jwt import PyJWTError
 from pydantic import BaseModel
 
-from typing import Union
-
+from auth import Authentication
 from data import datasource
 from models import Aroio, Token
-from auth import Authentication
-from exceptions import UnauthorizedException
 
 router = APIRouter()
 
