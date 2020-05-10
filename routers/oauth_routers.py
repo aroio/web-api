@@ -1,15 +1,20 @@
 from datetime import datetime, timedelta
-from exceptions import UnauthorizedException
+from enum import Enum
+from typing import Union
+import logging
 
 import jwt
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, status, Body
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jwt import PyJWTError
 from pydantic import BaseModel
 
+from exceptions import UnauthorizedException, NotFoundException
 from auth import Authentication
 from data import datasource
 from models import Aroio, Token
+
+logger = logging.getLogger("aroio_api")
 
 router = APIRouter()
 
@@ -36,16 +41,14 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/token")
 def get_auth_aroio(token: str = Depends(oauth2_scheme)):
     """Getting an authenticated Aroio"""
     credentials_exception = UnauthorizedException(detail="Could not validate credentials")
+    aroio = datasource.load_aroio()
     try:
         payload = jwt.decode(token, key=SECRET, algorithms=[ALGORITHM])
         aroio_dict = payload.get("sub")
         aroio_name = aroio_dict["name"]
-        if aroio_name is None:
+        if aroio_name != aroio.name:
             raise credentials_exception
     except PyJWTError:
-        raise credentials_exception
-    aroio = datasource.load_aroio()
-    if aroio.name != aroio_name:
         raise credentials_exception
     return aroio
 
@@ -55,8 +58,15 @@ class LoginForm(BaseModel):
     password: str
 
 
+@router.post("/login", tags=["auth"])
+def login_json(form: LoginForm):
+    data = f"username={form.username}&password={form.password}"
+    formData = OAuth2PasswordRequestForm(data)
+    return login(formData=formData)
+
+
 @router.post("/token", tags=["auth"])
-def login_for_access_token(formData: LoginForm):
+def login(formData: OAuth2PasswordRequestForm=Depends()):
     """The login route to use in production"""
     db_aroio: Aroio = datasource.load_aroio()
     if db_aroio.authentication_enabled:
