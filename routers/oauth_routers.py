@@ -4,7 +4,7 @@ from typing import Union
 import logging
 
 import jwt
-from fastapi import APIRouter, Depends, status, Body
+from fastapi import APIRouter, Depends
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jwt import PyJWTError
 from pydantic import BaseModel
@@ -60,9 +60,14 @@ class LoginForm(BaseModel):
 
 @router.post("/login", tags=["auth"])
 def login_json(form: LoginForm):
-    data = f"username={form.username}&password={form.password}"
-    formData = OAuth2PasswordRequestForm(data)
-    return login(formData=formData)
+    """Provide the login via json format"""
+    return login(formData=OAuth2PasswordRequestForm(
+        username = form.username,
+        password = form.password,
+        scope = "",
+        client_id = None,
+        client_secret = None
+    ))
 
 
 @router.post("/token", tags=["auth"])
