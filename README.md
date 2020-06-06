@@ -48,4 +48,4 @@ $ git clone https://github.com/aroio/aroio-ng.git
 $ cd aroio-ng
 ```
 
-use Instructions on https://github.com/unicap/aroio-ng and do your changes in some feature-branch
+use Instructions on https://github.com/aroio/aroio-ng and do your changes in some feature-branch
