@@ -44,7 +44,7 @@ use google cloud platform with an nice and powerful setup with a shitload of RAM
 
 ```
 $ sudo apt install -y sed make binutils build-essential gcc g++ bash patch gzip bzip2 perl tar cpio python unzip rsync file bc wget git screen flex
-$ git clone https://github.com/unicap/aroio-ng.git
+$ git clone https://github.com/aroio/aroio-ng.git
 $ cd aroio-ng
 ```
 
