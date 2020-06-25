@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -31,4 +33,4 @@ aroio_api.include_router(languages_routers.router)
 aroio_api.include_router(measurement_routers.router)
 
 if __name__ == "__main__":
-    uvicorn.run(aroio_api, host="127.0.0.1", port=4200)
+    uvicorn.run(aroio_api, host="127.0.0.1", port=8000)
