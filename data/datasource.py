@@ -12,13 +12,18 @@ from typing import List
 import json
 import yaml
 
+# Dev
+# databasePath = "./aroio_db.json";
+
+# Prod
+databasePath = "/boot/aroio_db.json";
+
 
 class DataSource:
 
-    def __init__(self, path: str="./aroio_db.json", translation_path: str="./translations/"):
+    def __init__(self, path: str = databasePath, translation_path: str = "./translations/"):
         self.aroio_path = path
         self.translation_path = translation_path
-
 
     def load_aroio(self) -> Aroio:
         """Reads data of Aroio from userconfig"""
@@ -33,16 +38,15 @@ class DataSource:
             self.save(aroio=aroio)
             return aroio
 
-
     def sync(self,
-        aroio: Aroio=None,
-        configuration: Configuration=None,
-        network_config: NetworkConfig=None,
-        system_config: SystemConfig=None,
-        streaming_config: StreamingConfig=None,
-        audio_config: AudioConfig=None,
-        convolver_config: ConvolverConfig=None,
-        filters: List[Filter]=None):
+             aroio: Aroio = None,
+             configuration: Configuration = None,
+             network_config: NetworkConfig = None,
+             system_config: SystemConfig = None,
+             streaming_config: StreamingConfig = None,
+             audio_config: AudioConfig = None,
+             convolver_config: ConvolverConfig = None,
+             filters: List[Filter] = None):
         """Syncing of entities.
         Updating Aroio entities by just passing as a parameter. E.g.:
         ```
@@ -72,18 +76,16 @@ class DataSource:
             db.configuration.convolver = convolver_config
         if filters is not None:
             db.configuration.convolver.filters = filters
-        
+
         self.save(aroio=db)
 
         return db
-
 
     def save(self, aroio: Aroio):
         """Saving an aroio object"""
         with open(self.aroio_path, 'w') as f:
             f.write(json.dumps(aroio.dict()))
             f.close()
-
 
     def load_translations(self, lang: str):
         """
@@ -96,9 +98,10 @@ class DataSource:
             "DE": self.translation_path + "messages.de.yml",
             "EN": self.translation_path + "messages.en.yml"
         }[lang.upper()]
-    
+
         with open(translation, "r") as yml_file:
             return yaml.safe_load(yml_file)
+
 
 # Import this shit Singleton style!
 datasource = DataSource()
