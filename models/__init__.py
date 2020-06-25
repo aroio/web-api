@@ -1,6 +1,7 @@
 from .aroio import *
 from .audio import *
 from .auth import *
+from .command import *
 from .convolver import *
 from .network import *
 from .streaming import *
