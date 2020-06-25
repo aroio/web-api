@@ -1,5 +1,6 @@
 from typing import Optional
 from pydantic import BaseModel
+import socket
 
 class LAN(BaseModel):
     dhcp: bool = True
@@ -14,7 +15,10 @@ class LAN(BaseModel):
             return True
         
         for addr in [self.ipaddr, self.netmask, self.dnsserv, self.gateway]:
-            if not Validator.ipv4(address=addr):
+            try:
+                socket.inet_aton(addr)
+                return True
+            except socket.error:
                 return False
         return True
 
