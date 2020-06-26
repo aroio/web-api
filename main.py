@@ -33,4 +33,4 @@ aroio_api.include_router(languages_routers.router)
 aroio_api.include_router(measurement_routers.router)
 
 if __name__ == "__main__":
-    uvicorn.run(aroio_api, host="127.0.0.1", port=8000)
+    uvicorn.run(aroio_api, host="0.0.0.0", port=8000)
