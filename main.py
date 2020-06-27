@@ -21,6 +21,8 @@ aroio_api.add_middleware(
     allow_origins=[
         "http://localhost",
         "http://localhost:4200",
+        "http://0.0.0.0",
+        "http://0.0.0.0:4200",
     ],
     allow_credentials=True,
     allow_methods=["*"],

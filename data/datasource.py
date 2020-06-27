@@ -14,14 +14,16 @@ import yaml
 
 # Dev
 # databasePath = "./aroio_db.json";
+# translationsPath = "./translations/";
 
 # Prod
 databasePath = "/boot/aroio_db.json";
+translationsPath = "/opt/api/translations/";
 
 
 class DataSource:
 
-    def __init__(self, path: str = databasePath, translation_path: str = "./translations/"):
+    def __init__(self, path: str = databasePath, translation_path: str = translationsPath):
         self.aroio_path = path
         self.translation_path = translation_path
 
