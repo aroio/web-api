@@ -17,7 +17,7 @@ import yaml
 # translationsPath = "./translations/";
 
 # Prod
-databasePath = "/boot/aroio_db.json";
+databasePath = "/tmp/aroio_db.json";
 translationsPath = "/opt/api/translations/";
 
 

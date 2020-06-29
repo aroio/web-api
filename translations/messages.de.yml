@@ -241,8 +241,9 @@ aroio:
           help: Tragen Sie hier das Passwort Ihres WLAN Netzwerkes ein.
 
 form:
-  error:
+  errors:
     required: Dieses Feld wird benötigt
+    pattern: Bitte geben Sie eine korrekte IP Adresse an
 
 security:
   login:

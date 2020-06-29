@@ -18,12 +18,7 @@ from routers import (
 aroio_api = FastAPI()
 aroio_api.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost",
-        "http://localhost:4200",
-        "http://0.0.0.0",
-        "http://0.0.0.0:4200",
-    ],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
