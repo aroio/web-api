@@ -17,7 +17,6 @@ class LAN(BaseModel):
         for addr in [self.ipaddr, self.netmask, self.dnsserv, self.gateway]:
             try:
                 socket.inet_aton(addr)
-                return True
             except socket.error:
                 return False
         return True
