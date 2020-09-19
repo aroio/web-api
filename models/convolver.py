@@ -1,6 +1,7 @@
 from typing import Optional, List
 from pydantic import BaseModel
 
+
 class Filter(BaseModel):
     is_active: bool = False
     coeff_name: Optional[str] = None
