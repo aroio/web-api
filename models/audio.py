@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
+
 class PlayerConfig(BaseModel):
     mscoding: bool = False
     measurement_output: str = "vol-plug-ms"

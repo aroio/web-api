@@ -2,6 +2,7 @@ from typing import Optional
 from pydantic import BaseModel
 import socket
 
+
 class LAN(BaseModel):
     dhcp: bool = True
     ipaddr: Optional[str] = None
@@ -13,11 +14,10 @@ class LAN(BaseModel):
         """Returns if all addresses of LAN are IPv4 addresses, when dhcp is set to False."""
         if self.dhcp:
             return True
-        
+
         for addr in [self.ipaddr, self.netmask, self.dnsserv, self.gateway]:
             try:
                 socket.inet_aton(addr)
-                return True
             except socket.error:
                 return False
         return True
