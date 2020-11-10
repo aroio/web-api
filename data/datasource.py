@@ -13,12 +13,12 @@ import json
 import yaml
 
 # Dev
-# databasePath = "./aroio_db.json";
-# translationsPath = "./translations/";
+databasePath = "./aroio_db.json";
+translationsPath = "./translations/";
 
 # Prod
-databasePath = "/tmp/aroio_db.json";
-translationsPath = "/opt/api/translations/";
+# databasePath = "/tmp/aroio_db.json";
+# translationsPath = "/opt/api/translations/";
 
 
 class DataSource:
