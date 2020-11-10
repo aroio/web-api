@@ -1,0 +1,12 @@
+[Unit]
+Description=webapi service
+Requires=network.target checkuserconfig.service
+After=checkuserconfig.service
+
+[Service]
+Type=simple
+ExecStart=/bin/python /opt/webapi/start_api.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
