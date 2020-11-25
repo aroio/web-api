@@ -19,7 +19,6 @@ import yaml
 # Prod
 databasePath = "/tmp/aroio_db.json"
 translationsPath = "/opt/webapi/translations/"
-»
 
 class DataSource:
 
