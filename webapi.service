@@ -1,7 +1,7 @@
 [Unit]
 Description=webapi service
 Requires=network.target checkuserconfig.service
-After=checkuserconfig.service
+After=network.target
 
 [Service]
 Type=simple
