@@ -1,0 +1,38 @@
+#!/usr/bin/env python
+import json
+import sys
+import argparse
+
+"""
+Function to get any value from database
+"""
+
+parser = argparse.ArgumentParser()
+parser.add_argument("key", help="dot (.) separated JSON value to get from Aroio_DB", type=str)
+args = parser.parse_args()
+
+databasePath = "/tmp/aroio_db.json"
+
+
+def load_aroio() -> str:
+    """Reads data of Aroio from userconfig"""
+    try:
+        with open(databasePath) as f:
+            aroio_db = json.load(f)
+            return aroio_db
+    except IOError:
+        print("Database not accessable, generate Database.")
+
+
+def getKeyFromJSON():
+    db = load_aroio()
+    for i in args.key.split("."):
+        if i in db:
+            db = db[i]
+        else:
+            return None
+
+    sys.exit(db)
+
+
+getKeyFromJSON()
