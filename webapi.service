@@ -9,4 +9,4 @@ ExecStart=/bin/python /opt/webapi/startup_api.py
 Restart=always
 
 [Install]
-WantedBy=default.target
+WantedBy=multi-user.target
