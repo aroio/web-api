@@ -1,7 +1,7 @@
 #!/usr/bin/env python
+import argparse
 import json
 import sys
-import argparse
 
 """
 Function to get any value from database
@@ -12,6 +12,7 @@ parser.add_argument("key", help="dot (.) separated JSON value to get from Aroio_
 args = parser.parse_args()
 
 databasePath = "/tmp/aroio_db.json"
+SEPARATOR = '.'
 
 
 def load_aroio() -> str:
@@ -24,15 +25,20 @@ def load_aroio() -> str:
         print("Database not accessable, generate Database.")
 
 
-def getKeyFromJSON():
-    db = load_aroio()
-    for i in args.key.split("."):
-        if i in db:
-            db = db[i]
+def get_key_from_json(obj: json):
+    for i in args.key.split(SEPARATOR):
+        if i in obj:
+            obj = obj[i]
         else:
             return None
+    return obj
 
-    sys.exit(db)
+
+def main():
+    aroio = load_aroio()
+    value = get_key_from_json(aroio)
+    sys.exit(value)
 
 
-getKeyFromJSON()
+if __name__ == '__main__':
+    main()
