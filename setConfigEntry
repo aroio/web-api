@@ -1,0 +1,76 @@
+#!/usr/bin/env python
+import argparse
+import json
+import sys
+
+"""
+Function to set any value from database.
+Example usage:
+
+`python3 setConfigEntry configuration.network.hostname horst`
+would change the hostname of the network to "horst"
+"""
+
+parser = argparse.ArgumentParser()
+parser.add_argument("key", help="dot (.) separated JSON value to get from Aroio_DB", type=str)
+parser.add_argument("value", help="Value to be set to the given key")
+args = parser.parse_args()
+
+databasePath = "/tmp/aroio_db.json"
+SEPARATOR = '.'
+
+
+def save_aroio(aroio: dict):
+    """Persist the aroio in json format"""
+    with open(databasePath, 'r+') as f:
+        f.write(json.dumps(aroio))
+        f.truncate()
+
+
+def load_aroio() -> json:
+    """Reads data of Aroio from userconfig"""
+    try:
+        with open(databasePath) as f:
+            aroio_db = json.load(f)
+            return aroio_db
+    except IOError:
+        print("Database not accessible, generate Database.")
+
+
+def set_config_entry(obj: json, key: str, value) -> int:
+    """Sets the value of the key in the given object. Returning the exit code"""
+    keys = key.split(sep=SEPARATOR)
+    try:
+        if len(keys) == 1:
+            obj[keys[0]] = value
+        else:
+            key = keys.pop(0)
+            set_config_entry(obj=obj[key], key='.'.join(keys), value=value)
+
+    except OSError:
+        print("Could not set value for key", keys[0])
+        return 1
+    return 0
+
+
+def main():
+    key = args.key
+    value = args.value
+    if not key:
+        raise KeyError("Need to pass a key to be set")
+    if not value:
+        raise KeyError("Need to pass a value to set")
+
+    aroio = load_aroio()
+    if not aroio:
+        raise FileNotFoundError("Aroio was not found")
+
+    exit_code = set_config_entry(obj=aroio, key=key, value=value)
+    if exit_code == 0:
+        save_aroio(aroio)
+
+    sys.exit(exit_code)
+
+
+if __name__ == '__main__':
+    main()
