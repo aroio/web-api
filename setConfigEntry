@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import argparse
 import json
 import sys
@@ -9,6 +9,9 @@ Example usage:
 
 `python3 setConfigEntry configuration.network.hostname horst`
 would change the hostname of the network to "horst"
+
+in BASH use:
+setConfigEntry configuration.network.hostname $NAME
 """
 
 parser = argparse.ArgumentParser()

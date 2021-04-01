@@ -1,11 +1,20 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import argparse
 import json
 import sys
 
 """
 Function to get any value from database
+Example usage:
+
+`setConfigEntry configuration.network.hostname`
+would return the hostname of the network
+
+in BASH use:
+NAME=$(getConfigEntry configuration.network.hostname 2>&1)
+echo $NAME
 """
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument("key", help="dot (.) separated JSON value to get from Aroio_DB", type=str)
